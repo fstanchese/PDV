@@ -56,6 +56,7 @@ public class ClienteDAO {
 			stm.setLong(1, id);
 			try (ResultSet rs = stm.executeQuery();) {
 				if (rs.next()) {
+					dto.setId(id);
 					dto.setNome(rs.getString("nome"));
 					dto.setFone(rs.getString("fone"));
 					dto.setCpf(rs.getString("cpf"));
@@ -68,4 +69,6 @@ public class ClienteDAO {
 		}
 		return dto;
 	}
+	
+
 }
