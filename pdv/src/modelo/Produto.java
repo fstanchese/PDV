@@ -15,6 +15,7 @@ public class Produto {
 	private Long id;
 	private String codigo;
 	private String descricao;
+	transient String acao;
 
 	public Produto(Long id, String codigo, String descricao) {
 		super();
@@ -23,11 +24,11 @@ public class Produto {
 		this.descricao = descricao;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -46,11 +47,20 @@ public class Produto {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+	
+	public String getAcao() {
+		return acao;
+	}
+
+	public void setAcao(String acao) {
+		this.acao = acao;
+	}
 	public void criar() {
 		ProdutoDAO dao = new ProdutoDAO();
 		ProdutoDTO dto = new ProdutoDTO();
 		dto.setCodigo(codigo);
 		dto.setDescricao(descricao);
+		dto.setAcao(acao);
 		dao.incluir(dto);
 	}
 	
@@ -60,6 +70,7 @@ public class Produto {
 		dto.setId(id);
 		dto.setCodigo(codigo);
 		dto.setDescricao(descricao);
+		dto.setAcao(acao);
 		dao.alterar(dto);		
 	}
 	
@@ -78,8 +89,8 @@ public class Produto {
 	}
 
 	public List<Produto> listar() {
-		List<Produto> Produtos = new ArrayList<>();
-		String sqlSelect = "SELECT id, codigo, descricao FROM Produto order by descricao";
+		List<Produto> produtos = new ArrayList<>();
+		String sqlSelect = "SELECT id, codigo, descricao FROM produto order by descricao";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
 			try (ResultSet rs = stm.executeQuery();) {
@@ -88,8 +99,8 @@ public class Produto {
 					String pCodigo = rs.getString("codigo");
 					String pDescricao = rs.getString("descricao");
 					
-					Produto Produto = new Produto(pId, pCodigo, pDescricao);
-					Produtos.add(Produto);
+					Produto produto = new Produto(pId, pCodigo, pDescricao);
+					produtos.add(produto);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -97,7 +108,7 @@ public class Produto {
 		} catch (SQLException e1) {
 			System.out.print(e1.getStackTrace());
 		}
-		return Produtos;		
+		return produtos;		
 	}
 
 	@Override

@@ -16,6 +16,7 @@ public class Cliente {
 	private String nome;
 	private String fone;
 	private String cpf;
+	transient String acao;
 
 	public Cliente(Long id, String nome, String fone, String cpf) {
 		super();
@@ -57,12 +58,21 @@ public class Cliente {
 		this.cpf = cpf;
 	}
 
+	public String getAcao() {
+		return acao;
+	}
+
+	public void setAcao(String acao) {
+		this.acao = acao;
+	}
+
 	public void criar() {
 		ClienteDAO dao = new ClienteDAO();
 		ClienteDTO dto = new ClienteDTO();
 		dto.setNome(nome);
 		dto.setFone(fone);
 		dto.setCpf(cpf);
+		
 		dao.incluir(dto);
 	}
 	

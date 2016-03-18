@@ -46,7 +46,7 @@
 						name="nome" value="${cliente.nome}" class="form-control" />
 				</div>
 				<div class="form-group">
-					<label>CPF : </label> <input type=text maxlength="11" size="11"
+					<label>CPF : </label> <input type=text maxlength="15" size="15"
 						name="cpf" value="${cliente.cpf}" class="form-control" />
 				</div>
 				<div class="form-group">
@@ -56,7 +56,7 @@
 				</div>
 				<div class="form-group">
 					<input name="action" class="btn btn-primary" type="submit" value="Incluir"> 
-					<c:if test="${cliente.acao == 'read'}">
+					<c:if test="${cliente.acao == 'Carregar'}">
 						<input name="action" class="btn btn-primary" type="submit" value="Alterar">
 					</c:if>
 					<input name="action" class="btn btn-primary" type="submit" value="Limpar">

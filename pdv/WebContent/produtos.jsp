@@ -24,16 +24,17 @@
 			<hr />
 			<div class="form-group">
 				<div class="form-group">
-					<label>Codigo : </label> <input required type=text maxlength="11" size="11"
-						name="cpf" value="${produto.codigo}" class="form-control" />
-				</div>				<div class="form-group">
-					<label>Descrição : </label> <input required type=text size="80" maxlength="100"
-						name="nome" value="${produto.descricao}" class="form-control" />
+					<label>Codigo : </label> 
+					<input required type=text maxlength="11" size="11" name="codigo" value="${produto.codigo}" class="form-control" />
+				</div>				
+				<div class="form-group">
+					<label>Descrição : </label> 
+					<input required type=text size="80" maxlength="100" name="descricao" value="${produto.descricao}" class="form-control" />
 				</div>
 
 				<div class="form-group">
 					<input name="action" class="btn btn-primary" type="submit" value="Incluir"> 
-					<c:if test="${produto.acao == 'read'}">
+					<c:if test="${produto.acao == 'Carregar'}">
 						<input name="action" class="btn btn-primary" type="submit" value="Alterar">
 					</c:if>
 					<input name="action" class="btn btn-primary" type="submit" value="Limpar">
@@ -41,7 +42,7 @@
 				<hr />
 				<br />
 			</div>
-			<c:if test="${produto[0].id > 0}">
+			<c:if test="${produtos[0].id > 0}">
 			<c:if test="${produto.acao != 'Carregar'}">
 			<table class="table table-responsive">
 				<thead>

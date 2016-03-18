@@ -46,7 +46,7 @@ public class ProdutoDAO {
 
 	public ProdutoDTO carregar(Long id) {
 		ProdutoDTO dto = new ProdutoDTO();
-		String sqlSelect = "SELECT codigo, descricao FROM Produto WHERE Produto.id = ?";
+		String sqlSelect = "SELECT codigo, descricao FROM produto WHERE id = ?";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
 			stm.setLong(1, id);

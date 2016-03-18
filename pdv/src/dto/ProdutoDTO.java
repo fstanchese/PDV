@@ -4,12 +4,13 @@ public class ProdutoDTO {
 	private Long id;
 	private String codigo;
 	private String descricao;
-
-	public long getId() {
+	transient String acao;
+	
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -29,5 +30,13 @@ public class ProdutoDTO {
 		this.descricao = descricao;
 	}
 
+	public String getAcao() {
+		return acao;
+	}
+
+	public void setAcao(String acao) {
+		this.acao = acao;
+	}
+	
 }
 

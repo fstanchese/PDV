@@ -32,7 +32,7 @@ public class ProdutoController extends HttpServlet {
 				id = Long.parseLong(pId);
 			}
 		}
-		
+
 		Produto produto = new Produto(id, pCodigo, pDescricao);
 
 		if ("Incluir".equals(pAction)) {
@@ -44,12 +44,13 @@ public class ProdutoController extends HttpServlet {
 		} else if ("Carregar".equals(pAcao)) {
 			ProdutoDAO dao = new ProdutoDAO();
 			ProdutoDTO dto = dao.carregar(id);
+			dto.setAcao(pAcao);
 			request.setAttribute("produto", dto);
 		}
-
-		List<Produto> produtos = produto.listar();
-
-		request.setAttribute("produtos", produtos);
+		if (!"Carregar".equals(pAcao)) {
+			List<Produto> produtos = produto.listar();
+			request.setAttribute("produtos", produtos);
+		}
 		RequestDispatcher rd = request.getRequestDispatcher("/produtos.jsp");
 		rd.forward(request, response);
 	}

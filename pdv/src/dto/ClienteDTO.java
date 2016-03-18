@@ -5,6 +5,7 @@ public class ClienteDTO {
 	private String nome;
 	private String fone;
 	private String cpf;
+	transient String acao;
 	
 	public Long getId() {
 		return id;
@@ -30,4 +31,11 @@ public class ClienteDTO {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
+	public String getAcao() {
+		return acao;
+	}
+	public void setAcao(String acao) {
+		this.acao = acao;
+	}
+	
 }

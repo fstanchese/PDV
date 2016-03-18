@@ -33,7 +33,7 @@ public class ClienteController extends HttpServlet {
 				id = Long.parseLong(pId);
 			}
 		}
-		
+
 		Cliente cliente = new Cliente(id, pNome, pFone, pCpf);
 
 		if ("Incluir".equals(pAction)) {
@@ -45,12 +45,13 @@ public class ClienteController extends HttpServlet {
 		} else if ("Carregar".equals(pAcao)) {
 			ClienteDAO dao = new ClienteDAO();
 			ClienteDTO dto = dao.carregar(id);
+			dto.setAcao(pAcao);
 			request.setAttribute("cliente", dto);
 		}
-
-		List<Cliente> clientes = cliente.listar();
-
-		request.setAttribute("clientes", clientes);
+		if (!"Carregar".equals(pAcao)) {
+			List<Cliente> clientes = cliente.listar();
+			request.setAttribute("clientes", clientes);
+		}
 		RequestDispatcher rd = request.getRequestDispatcher("/clientes.jsp");
 		rd.forward(request, response);
 	}
