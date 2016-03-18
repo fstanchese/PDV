@@ -14,6 +14,7 @@
 </head>
 <body>
 	<script type="text/javascript">
+
 		jQuery(function($) {
 			$.mask.definitions['~'] = '[+-]';
 			//Inicio Mascara Telefone
@@ -41,7 +42,7 @@
 			<hr />
 			<div class="form-group">
 				<div class="form-group">
-					<label>Nome : </label> <input type=text size="80" maxlength="100"
+					<label>Nome : </label> <input required type=text size="80" maxlength="100"
 						name="nome" value="${cliente.nome}" class="form-control" />
 				</div>
 				<div class="form-group">
@@ -55,12 +56,16 @@
 				</div>
 				<div class="form-group">
 					<input name="action" class="btn btn-primary" type="submit" value="Incluir"> 
-					<input name="action" class="btn btn-primary" type="submit" value="Alterar">
+					<c:if test="${cliente.acao == 'read'}">
+						<input name="action" class="btn btn-primary" type="submit" value="Alterar">
+					</c:if>
 					<input name="action" class="btn btn-primary" type="submit" value="Limpar">
 				</div>
 				<hr />
 				<br />
 			</div>
+			<c:if test="${clientes[0].id > 0}">
+			<c:if test="${cliente.acao != 'Carregar'}">
 			<table class="table table-responsive">
 				<thead>
 					<tr>
@@ -86,6 +91,8 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			</c:if>
+			</c:if>
 		</div>
 	</form>
 </body>

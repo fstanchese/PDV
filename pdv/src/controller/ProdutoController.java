@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.ClienteDAO;
-import dto.ClienteDTO;
-import modelo.Cliente;
+import dao.ProdutoDAO;
+import dto.ProdutoDTO;
+import modelo.Produto;
 
-@WebServlet("/clientes")
-public class ClienteController extends HttpServlet {
+@WebServlet("/produtos")
+public class ProdutoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
@@ -23,9 +23,8 @@ public class ClienteController extends HttpServlet {
 
 		String pAcao = request.getParameter("acao");
 		String pAction = request.getParameter("action");
-		String pNome = request.getParameter("nome");
-		String pCpf = request.getParameter("cpf");
-		String pFone = request.getParameter("fone");
+		String pCodigo = request.getParameter("codigo");
+		String pDescricao = request.getParameter("descricao");
 		String pId = request.getParameter("id");
 		Long id = 0L;
 		if (pId != null) {
@@ -34,24 +33,24 @@ public class ClienteController extends HttpServlet {
 			}
 		}
 		
-		Cliente cliente = new Cliente(id, pNome, pFone, pCpf);
+		Produto produto = new Produto(id, pCodigo, pDescricao);
 
 		if ("Incluir".equals(pAction)) {
-			cliente.criar();
+			produto.criar();
 		} else if ("Alterar".equals(pAction)) {
-			cliente.alterar();
+			produto.alterar();
 		} else if ("Excluir".equals(pAcao)) {
-			cliente.excluir();
+			produto.excluir();
 		} else if ("Carregar".equals(pAcao)) {
-			ClienteDAO dao = new ClienteDAO();
-			ClienteDTO dto = dao.carregar(id);
-			request.setAttribute("cliente", dto);
+			ProdutoDAO dao = new ProdutoDAO();
+			ProdutoDTO dto = dao.carregar(id);
+			request.setAttribute("produto", dto);
 		}
 
-		List<Cliente> clientes = cliente.listar();
+		List<Produto> produtos = produto.listar();
 
-		request.setAttribute("clientes", clientes);
-		RequestDispatcher rd = request.getRequestDispatcher("/clientes.jsp");
+		request.setAttribute("produtos", produtos);
+		RequestDispatcher rd = request.getRequestDispatcher("/produtos.jsp");
 		rd.forward(request, response);
 	}
 }
