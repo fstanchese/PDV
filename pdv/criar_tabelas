@@ -1,0 +1,6 @@
+CREATE TABLE `pdv`.`cliente` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(100) NOT NULL,
+  `fone` VARCHAR(20) NULL,
+  `cpf` VARCHAR(15) NULL,
+  PRIMARY KEY (`id`));
