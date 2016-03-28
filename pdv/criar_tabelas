@@ -4,3 +4,12 @@ CREATE TABLE `pdv`.`cliente` (
   `fone` VARCHAR(20) NULL,
   `cpf` VARCHAR(15) NULL,
   PRIMARY KEY (`id`));
+
+CREATE TABLE `pdv`.`produto` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `codigo` VARCHAR(10) NOT NULL,
+  `descricao` VARCHAR(100) NULL,
+  `valorvenda` DECIMAL(6,2) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `codigo_UNIQUE` (`codigo` ASC));
+  
