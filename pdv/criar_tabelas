@@ -11,9 +11,11 @@ CREATE TABLE `pdv`.`cliente` (
   `nome` VARCHAR(100) NOT NULL,
   `fone` VARCHAR(20) NULL,
   `cpf` VARCHAR(15) NULL,
+  `email` VARCHAR(60) NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC));
-
+  UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC));
+  
 CREATE TABLE `pdv`.`produto` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `codigo` VARCHAR(10) NOT NULL,
