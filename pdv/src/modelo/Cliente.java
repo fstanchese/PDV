@@ -116,10 +116,10 @@ public class Cliente {
 		List<Cliente> clientes = new ArrayList<>();
 		String sqlSelect = null;
         if (busca.isEmpty()) {
-        	sqlSelect = "SELECT id, nome, fone, cpf FROM cliente order by nome";
+        	sqlSelect = "SELECT id, nome, fone, cpf,email FROM cliente order by nome";
         }
 		else {
-        	sqlSelect = "SELECT id, nome, fone, cpf FROM cliente where nome like ? order by nome";		
+        	sqlSelect = "SELECT id, nome, fone, cpf,email FROM cliente where nome like ? order by nome";		
 		}
 		try (Connection conn = ConnectionFactory.obtemConexao();
 			PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
