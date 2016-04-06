@@ -26,6 +26,8 @@ public class ClienteController extends HttpServlet {
 		String pNome = request.getParameter("nome");
 		String pCpf = request.getParameter("cpf");
 		String pFone = request.getParameter("fone");
+		String pEmail = request.getParameter("email");
+		String pBusca = request.getParameter("busca");
 		String pId = request.getParameter("id");
 		Long id = 0L;
 		if (pId != null) {
@@ -34,7 +36,7 @@ public class ClienteController extends HttpServlet {
 			}
 		}
 
-		Cliente cliente = new Cliente(id, pNome, pFone, pCpf);
+		Cliente cliente = new Cliente(id, pNome, pFone, pCpf, pEmail );
 
 		if ("Incluir".equals(pAction)) {
 			cliente.criar();
@@ -48,8 +50,8 @@ public class ClienteController extends HttpServlet {
 			dto.setAcao(pAcao);
 			request.setAttribute("cliente", dto);
 		}
-		if (!"Carregar".equals(pAcao)) {
-			List<Cliente> clientes = cliente.listar();
+		if ("Pesquisar".equals(pAction)) {
+			List<Cliente> clientes = cliente.listar(pBusca);
 			request.setAttribute("clientes", clientes);
 		}
 		RequestDispatcher rd = request.getRequestDispatcher("/clientes.jsp");

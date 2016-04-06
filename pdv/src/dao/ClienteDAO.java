@@ -11,12 +11,13 @@ import util.ConnectionFactory;
 public class ClienteDAO {
 
 	public void incluir(ClienteDTO dto) {
-		String sql = "INSERT INTO cliente( nome, fone, cpf ) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO cliente( nome, fone, cpf, email ) VALUES (?, ?, ?, ?)";
 
 		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sql);) {
 			stm.setString(1, dto.getNome());
 			stm.setString(2, dto.getFone());
 			stm.setString(3, dto.getCpf());
+			stm.setString(4, dto.getEmail());
 			stm.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -24,13 +25,14 @@ public class ClienteDAO {
 	}
 
 	public void alterar(ClienteDTO dto) {
-		String sql = "UPDATE cliente SET nome=? , fone=?, cpf=? WHERE id=?";
+		String sql = "UPDATE cliente SET nome=? , fone=?, cpf=?, email=? WHERE id=?";
 
 		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sql);) {
 			stm.setString(1, dto.getNome());
 			stm.setString(2, dto.getFone());
 			stm.setString(3, dto.getCpf());
-			stm.setLong(4, dto.getId());
+			stm.setString(4, dto.getEmail());
+			stm.setLong(5, dto.getId());
 			stm.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -50,7 +52,7 @@ public class ClienteDAO {
 
 	public ClienteDTO carregar(Long id) {
 		ClienteDTO dto = new ClienteDTO();
-		String sqlSelect = "SELECT nome, fone, cpf FROM cliente WHERE cliente.id = ?";
+		String sqlSelect = "SELECT nome, fone, cpf, email FROM cliente WHERE cliente.id = ?";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
 			stm.setLong(1, id);
@@ -60,6 +62,7 @@ public class ClienteDAO {
 					dto.setNome(rs.getString("nome"));
 					dto.setFone(rs.getString("fone"));
 					dto.setCpf(rs.getString("cpf"));
+					dto.setEmail(rs.getString("email"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

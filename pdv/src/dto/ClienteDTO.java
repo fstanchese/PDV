@@ -5,37 +5,55 @@ public class ClienteDTO {
 	private String nome;
 	private String fone;
 	private String cpf;
+	private String email;
+
 	transient String acao;
-	
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public String getFone() {
 		return fone;
 	}
+
 	public void setFone(String fone) {
 		this.fone = fone;
 	}
+
 	public String getCpf() {
 		return cpf;
 	}
+
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
+
 	public String getAcao() {
 		return acao;
 	}
+
 	public void setAcao(String acao) {
 		this.acao = acao;
 	}
-	
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getEmail() {
+		return email;
+	}
 }
