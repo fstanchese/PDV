@@ -11,10 +11,11 @@ import util.ConnectionFactory;
 public class ProdutoDAO {
 
 	public void incluir(ProdutoDTO dto) {
-		String sql = "insert into produto (codigo,descricao) values (?,?)";
+		String sql = "insert into produto (codigo,descricao,valorvenda) values (?,?,?)";
 		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sql)) {
 			stm.setString(1, dto.getCodigo());
 			stm.setString(2, dto.getDescricao());
+			stm.setDouble(3, dto.getValorvenda());
 			stm.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -22,12 +23,13 @@ public class ProdutoDAO {
 	}
 
 	public void alterar(ProdutoDTO dto) {
-		String sql = "update produto set codigo=?,descricao=? where id=?";
+		String sql = "update produto set codigo=?,descricao=?,valorvenda=? where id=?";
 
 		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sql)) {
 			stm.setString(1, dto.getCodigo());
 			stm.setString(2, dto.getDescricao());
-			stm.setLong(3, dto.getId());
+			stm.setDouble(3, dto.getValorvenda());
+			stm.setLong(4, dto.getId());
 			stm.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -46,7 +48,7 @@ public class ProdutoDAO {
 
 	public ProdutoDTO carregar(Long id) {
 		ProdutoDTO dto = new ProdutoDTO();
-		String sqlSelect = "SELECT codigo, descricao FROM produto WHERE id = ?";
+		String sqlSelect = "SELECT codigo, descricao,valorvenda FROM produto WHERE id = ?";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
 			stm.setLong(1, id);
@@ -55,6 +57,7 @@ public class ProdutoDAO {
 					dto.setId(id);
 					dto.setCodigo(rs.getString("codigo"));
 					dto.setDescricao(rs.getString("descricao"));
+					dto.setValorvenda(rs.getDouble("valorvenda"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

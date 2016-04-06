@@ -36,6 +36,8 @@ public class ProdutoController extends HttpServlet {
 		Double valorVenda = 0D;
 		if (pValorVenda != null) {
 			if (!pValorVenda.equals("")) {
+				pValorVenda = pValorVenda.replace(".", "");
+				pValorVenda = pValorVenda.replace(",", ".");
 				valorVenda = Double.parseDouble(pValorVenda);
 			}
 		}		

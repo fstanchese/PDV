@@ -138,10 +138,11 @@
 						<table class="table table-striped">
 							<thead>
 								<tr>
-									<th align=center>ID</th>
-									<th align=center>CODIGO</th>
-									<th align=center>DESCRICAO</th>
-									<th width="10%">AÇÃO</th>
+									<th align=center>Id</th>
+									<th align=center>Código</th>
+									<th align=center>Descrição</th>
+									<th align=center>Valor Venda</th>
+									<th width="10%">Ação</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -150,6 +151,7 @@
 										<td>&nbsp;${produto.id}</td>
 										<td>&nbsp;${produto.codigo}</td>
 										<td>&nbsp;${produto.descricao}</td>
+										<td>&nbsp;${produto.valorvenda}</td>
 										<td width="10%"><a class="btn btn-success"
 											onclick="javascript:document.f1.acao.value='Carregar';document.f1.id.value=${produto.id};document.f1.submit();"><i
 												class="glyphicon glyphicon-pencil"></i></a> <a

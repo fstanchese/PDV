@@ -22,3 +22,6 @@ CREATE TABLE `pdv`.`produto` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `codigo_UNIQUE` (`codigo` ASC));
   
+INSERT INTO `pdv`.`usuario` (`nome`, `login`, `senha`) VALUES ('Fernando F Stanchese', 'fstanchese', '123456');
+
+commit;
