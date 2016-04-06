@@ -4,6 +4,8 @@ public class ProdutoDTO {
 	private Long id;
 	private String codigo;
 	private String descricao;
+	private Double valorvenda;
+	
 	transient String acao;
 	
 	public Long getId() {
@@ -38,5 +40,12 @@ public class ProdutoDTO {
 		this.acao = acao;
 	}
 	
+	public void setValorvenda(Double valorvenda) {
+		this.valorvenda = valorvenda;
+	}
+	
+	public Double getValorvenda() {
+		return valorvenda;
+	}
 }
 

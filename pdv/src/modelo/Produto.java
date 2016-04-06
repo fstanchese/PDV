@@ -15,13 +15,15 @@ public class Produto {
 	private Long id;
 	private String codigo;
 	private String descricao;
+	private Double valorvenda;
 	transient String acao;
 
-	public Produto(Long id, String codigo, String descricao) {
+	public Produto(Long id, String codigo, String descricao, Double valorvenda) {
 		super();
 		this.id = id;
 		this.codigo = codigo;
 		this.descricao = descricao;
+		this.valorvenda = valorvenda;
 	}
 
 	public Long getId() {
@@ -48,6 +50,14 @@ public class Produto {
 		this.descricao = descricao;
 	}
 	
+	public void setValorvenda(Double valorvenda) {
+		this.valorvenda = valorvenda;
+	}
+	
+	public Double getValorvenda() {
+		return valorvenda;
+	}
+	
 	public String getAcao() {
 		return acao;
 	}
@@ -55,11 +65,13 @@ public class Produto {
 	public void setAcao(String acao) {
 		this.acao = acao;
 	}
+	
 	public void criar() {
 		ProdutoDAO dao = new ProdutoDAO();
 		ProdutoDTO dto = new ProdutoDTO();
 		dto.setCodigo(codigo);
 		dto.setDescricao(descricao);
+		dto.setValorvenda(valorvenda);
 		dto.setAcao(acao);
 		dao.incluir(dto);
 	}
@@ -70,6 +82,7 @@ public class Produto {
 		dto.setId(id);
 		dto.setCodigo(codigo);
 		dto.setDescricao(descricao);
+		dto.setValorvenda(valorvenda);
 		dto.setAcao(acao);
 		dao.alterar(dto);		
 	}
@@ -90,7 +103,7 @@ public class Produto {
 
 	public List<Produto> listar() {
 		List<Produto> produtos = new ArrayList<>();
-		String sqlSelect = "SELECT id, codigo, descricao FROM produto order by descricao";
+		String sqlSelect = "SELECT id, codigo, descricao, valorvenda FROM produto order by descricao";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
 			try (ResultSet rs = stm.executeQuery();) {
@@ -98,8 +111,8 @@ public class Produto {
 					Long pId = rs.getLong("id");
 					String pCodigo = rs.getString("codigo");
 					String pDescricao = rs.getString("descricao");
-					
-					Produto produto = new Produto(pId, pCodigo, pDescricao);
+					Double pValorVenda = rs.getDouble("valorvenda");
+					Produto produto = new Produto(pId, pCodigo, pDescricao, pValorVenda);
 					produtos.add(produto);
 				}
 			} catch (SQLException e) {

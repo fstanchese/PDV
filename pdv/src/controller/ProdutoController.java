@@ -26,14 +26,20 @@ public class ProdutoController extends HttpServlet {
 		String pCodigo = request.getParameter("codigo");
 		String pDescricao = request.getParameter("descricao");
 		String pId = request.getParameter("id");
+		String pValorVenda = request.getParameter("valorvenda");
 		Long id = 0L;
 		if (pId != null) {
 			if (!pId.equals("")) {
 				id = Long.parseLong(pId);
 			}
 		}
-
-		Produto produto = new Produto(id, pCodigo, pDescricao);
+		Double valorVenda = 0D;
+		if (pValorVenda != null) {
+			if (!pValorVenda.equals("")) {
+				valorVenda = Double.parseDouble(pValorVenda);
+			}
+		}		
+		Produto produto = new Produto(id, pCodigo, pDescricao, valorVenda);
 
 		if ("Incluir".equals(pAction)) {
 			produto.criar();
@@ -47,7 +53,7 @@ public class ProdutoController extends HttpServlet {
 			dto.setAcao(pAcao);
 			request.setAttribute("produto", dto);
 		}
-		if (!"Carregar".equals(pAcao)) {
+		if ("Pesquisar".equals(pAction)) {
 			List<Produto> produtos = produto.listar();
 			request.setAttribute("produtos", produtos);
 		}
