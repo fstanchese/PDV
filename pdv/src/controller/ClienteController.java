@@ -40,10 +40,13 @@ public class ClienteController extends HttpServlet {
 
 		if ("Incluir".equals(pAction)) {
 			cliente.criar();
+			request.setAttribute("acao", "sucesso");
 		} else if ("Alterar".equals(pAction)) {
 			cliente.alterar();
+			request.setAttribute("acao", "sucesso");
 		} else if ("Excluir".equals(pAcao)) {
 			cliente.excluir();
+			request.setAttribute("acao", "sucesso");
 		} else if ("Carregar".equals(pAcao)) {
 			ClienteDAO dao = new ClienteDAO();
 			ClienteDTO dto = dao.carregar(id);

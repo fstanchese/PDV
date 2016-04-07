@@ -19,7 +19,6 @@ public class Produto {
 	transient String acao;
 
 	public Produto(Long id, String codigo, String descricao, Double valorvenda) {
-		super();
 		this.id = id;
 		this.codigo = codigo;
 		this.descricao = descricao;

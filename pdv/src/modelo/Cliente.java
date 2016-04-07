@@ -20,7 +20,6 @@ public class Cliente {
 	transient String acao;
 
 	public Cliente(Long id, String nome, String fone, String cpf, String email) {
-		super();
 		this.id = id;
 		this.nome = nome;
 		this.fone = fone;
@@ -132,6 +131,7 @@ public class Cliente {
 					String nome = rs.getString("nome");
 					String fone = rs.getString("fone");
 					String cpf = rs.getString("cpf");
+					String email = rs.getString("email");
 					Cliente cliente = new Cliente(id, nome, fone, cpf, email );
 					clientes.add(cliente);
 				}

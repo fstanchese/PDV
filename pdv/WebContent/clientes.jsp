@@ -13,46 +13,45 @@
 <script src="resources/js/jquery.maskedinput-1.3.1.min.js"
 	type="text/javascript"></script>
 <script src="resources/js/jquery.validate.js" type="text/javascript"></script>
+<script src="resources/js/jquery.bootstrap-growl.js" type="text/javascript"></script>
 <meta charset="UTF-8">
 <title>Cadastro de Clientes</title>
 </head>
 <body>
-	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							jQuery(function($) {
-								$.mask.definitions['~'] = '[+-]';
-								//Inicio Mascara Telefone
-								$('#fone')
-										.mask("(99) 9999-9999?9")
-										.blur(
-												function(event) {
-													var target, phone, element;
-													target = (event.currentTarget) ? event.currentTarget
-															: event.srcElement;
-													phone = target.value
-															.replace(/\D/g, '');
-													element = $(target);
-													element.unmask();
-													if (phone.length > 10) {
-														element
-																.mask("(99) 99999-999?9");
-													} else {
-														element
-																.mask("(99) 9999-9999?9");
-													}
-												});
-							});
-							$("#formClientes").validate({
-								rules : {
-									nome : "required"
-								},
-								messages : {
-									nome : "Este campo não pode ser vazio!"
-								}
-							});
-						});
+<script type="text/javascript">
+	$(document).ready(function() {    
+		$(function() {
+			$.mask.definitions['~'] = '[+-]';
+			//Inicio Mascara Telefone
+			$('#fone').mask("(99) 9999-9999?9").blur(
+				function(event) {
+					var target, phone, element;
+					target = (event.currentTarget) ? event.currentTarget
+							: event.srcElement;
+					phone = target.value
+							.replace(/\D/g, '');
+					element = $(target);
+					element.unmask();
+					if (phone.length > 10) {
+						element
+								.mask("(99) 99999-999?9");
+					} else {
+						element
+								.mask("(99) 9999-9999?9");
+					}
+				});
+		});
+		$("#formClientes").validate({
+			rules : {
+				nome : "required",
+				email : { email: true }
+			},
+			messages : {
+				nome : "Este campo não pode ser vazio!",
+				email : "Entre com um email válido!"
+			}
+		});
+	});
 	</script>
 	<c:import url="cabecalho.jsp" />
 	<br>
@@ -60,41 +59,35 @@
 	<br>
 	<div class="container">
 		<h3 align="center">Cadastro de Clientes</h3>
-		<form id="formClientes" name="f1" action="clientes" method="post"
-			role="form">
+		<form id="formClientes" name="f1" action="clientes" method="post" role="form">
 			<input id="pId" type="hidden" name="id" value="${cliente.id}">
 			<input id="pAcao" type="hidden" name="acao">
 			<div class="col-md-12">
 				<div class="row">
 					<div class="form-group col-md-12">
-						<label for="nome">Nome</label> <input type="text"
-							class="form-control" name="nome" id="nome" maxlength="100"
-							value="${cliente.nome}">
+						<label for="nome">Nome</label> 
+						<input type="text" class="form-control" name="nome" id="nome" maxlength="100" value="${cliente.nome}">
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-md-4">
-						<label for="fone">Celular</label> <input type="tel"
-							class="form-control" name="fone" id="fone" maxlength="15"
-							value="${cliente.fone}">
+						<label for="fone">Celular</label> 
+						<input type="tel" class="form-control" name="fone" id="fone" maxlength="15"	value="${cliente.fone}">
 					</div>
 					<div class="form-group col-md-4">
-						<label for="email">E-Mail</label> <input type="email"
-							class="form-control" name="email" id="email" maxlength="60"
-							value="${cliente.email}">
+						<label for="email">E-Mail</label> 
+						<input type="email" class="form-control" name="email" id="email" maxlength="60"	value="${cliente.email}">
 					</div>
 					<div class="form-group col-md-4">
-						<label for="cpf">CPF : </label> <input type=text
-							class="form-control" maxlength="15" size="15" name="cpf"
-							value="${cliente.cpf}" />
+						<label for="cpf">CPF : </label>
+						<input type=text class="form-control" maxlength="15" size="15" name="cpf" value="${cliente.cpf}" />
 					</div>
 				</div>
 				<div id="actions" class="row">
 					<div class="col-md-12">
 						<button name="action" class="btn btn-primary" value="Incluir">Incluir</button>
 						<c:if test="${cliente.acao == 'Carregar'}">
-							<button name="action" class="btn btn-primary" type="submit"
-								value="Alterar">Alterar</button>
+							<button name="action" class="btn btn-primary" type="submit" value="Alterar">Alterar</button>
 						</c:if>
 						<a href="clientes" class="btn btn-default">Cancelar</a>
 					</div>
@@ -154,5 +147,16 @@
 			</c:if>
 		</form>
 	</div>
+	<c:if test="${acao == 'sucesso'}">
+		<script type="text/javascript">
+		$(document).ready(function() { 
+			$(function() {
+			    setTimeout(function() {
+			        $.bootstrapGrowl("Operação efetuada com sucesso.", { type:'success' ,align:'center'});
+			    }, 40);	
+			});
+		});
+	</script>	
+	</c:if>
 </body>
 </html>
