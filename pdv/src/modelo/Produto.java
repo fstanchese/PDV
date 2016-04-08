@@ -65,17 +65,17 @@ public class Produto {
 		this.acao = acao;
 	}
 	
-	public void criar() {
+	public boolean criar() {
 		ProdutoDAO dao = new ProdutoDAO();
 		ProdutoDTO dto = new ProdutoDTO();
 		dto.setCodigo(codigo);
 		dto.setDescricao(descricao);
 		dto.setValorvenda(valorvenda);
 		dto.setAcao(acao);
-		dao.incluir(dto);
+		return dao.incluir(dto);
 	}
 	
-	public void alterar() {
+	public boolean alterar() {
 		ProdutoDAO dao = new ProdutoDAO();
 		ProdutoDTO dto = new ProdutoDTO();
 		dto.setId(id);
@@ -83,25 +83,26 @@ public class Produto {
 		dto.setDescricao(descricao);
 		dto.setValorvenda(valorvenda);
 		dto.setAcao(acao);
-		dao.alterar(dto);		
+		return dao.alterar(dto);		
 	}
 	
-	public void excluir() {
+	public boolean excluir() {
 		ProdutoDAO dao = new ProdutoDAO();
 		ProdutoDTO dto = new ProdutoDTO();
 		dto.setId(id);
-		dao.excluir(dto);		
+		return dao.excluir(dto);		
 	}
 	
 	public void carregar() {
 		ProdutoDAO dao = new ProdutoDAO();
 		ProdutoDTO dto = dao.carregar(id);
-		codigo = dto.getCodigo();
-		descricao = dto.getDescricao();
+		this.codigo = dto.getCodigo();
+		this.descricao = dto.getDescricao();
+		this.valorvenda = dto.getValorvenda();
 	}
 
-	public List<Produto> listar() {
-		List<Produto> produtos = new ArrayList<>();
+	public List<ProdutoDTO> listar() {
+		List<ProdutoDTO> produtos = new ArrayList<>();
 		String sqlSelect = "SELECT id, codigo, descricao, valorvenda FROM produto order by descricao";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
@@ -111,7 +112,7 @@ public class Produto {
 					String pCodigo = rs.getString("codigo");
 					String pDescricao = rs.getString("descricao");
 					Double pValorVenda = rs.getDouble("valorvenda");
-					Produto produto = new Produto(pId, pCodigo, pDescricao, pValorVenda);
+					ProdutoDTO produto = new ProdutoDTO(pId, pCodigo, pDescricao, pValorVenda);
 					produtos.add(produto);
 				}
 			} catch (SQLException e) {

@@ -10,7 +10,7 @@ import util.ConnectionFactory;
 
 public class ClienteDAO {
 
-	public void incluir(ClienteDTO dto) {
+	public boolean incluir(ClienteDTO dto) {
 		String sql = "INSERT INTO cliente( nome, fone, cpf, email ) VALUES (?, ?, ?, ?)";
 
 		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sql);) {
@@ -19,12 +19,14 @@ public class ClienteDAO {
 			stm.setString(3, dto.getCpf());
 			stm.setString(4, dto.getEmail());
 			stm.execute();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 
-	public void alterar(ClienteDTO dto) {
+	public boolean alterar(ClienteDTO dto) {
 		String sql = "UPDATE cliente SET nome=? , fone=?, cpf=?, email=? WHERE id=?";
 
 		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sql);) {
@@ -34,19 +36,23 @@ public class ClienteDAO {
 			stm.setString(4, dto.getEmail());
 			stm.setLong(5, dto.getId());
 			stm.execute();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 
-	public void excluir(ClienteDTO dto) {
+	public boolean excluir(ClienteDTO dto) {
 		String sql = "DELETE FROM cliente WHERE id=?";
 
 		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sql);) {
 			stm.setLong(1, dto.getId());
 			stm.execute();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 
@@ -54,7 +60,7 @@ public class ClienteDAO {
 		ClienteDTO dto = new ClienteDTO();
 		String sqlSelect = "SELECT nome, fone, cpf, email FROM cliente WHERE cliente.id = ?";
 		try (Connection conn = ConnectionFactory.obtemConexao();
-				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
+			PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
 			stm.setLong(1, id);
 			try (ResultSet rs = stm.executeQuery();) {
 				if (rs.next()) {
@@ -72,5 +78,4 @@ public class ClienteDAO {
 		}
 		return dto;
 	}
-
 }

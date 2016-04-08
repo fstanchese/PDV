@@ -20,7 +20,8 @@ public class ProdutoController extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		String acao = null;
+		String mensagem = null;
 		String pAcao = request.getParameter("acao");
 		String pAction = request.getParameter("action");
 		String pCodigo = request.getParameter("codigo");
@@ -36,22 +37,36 @@ public class ProdutoController extends HttpServlet {
 		Double valorVenda = 0D;
 		if (pValorVenda != null) {
 			if (!pValorVenda.equals("")) {
-				//pValorVenda = pValorVenda.replace(".", "");
-				//pValorVenda = pValorVenda.replace(",", ".");
 				valorVenda = Double.parseDouble(pValorVenda);
 			}
 		}		
+		
 		Produto produto = new Produto(id, pCodigo, pDescricao, valorVenda);
 
 		if ("Incluir".equals(pAction)) {
-			produto.criar();
-			request.setAttribute("acao", "sucesso");
+			if (produto.criar()) {
+				acao = "success";
+				mensagem = "Produto cadastrado com sucesso";
+			} else {
+				acao = "danger";
+				mensagem = "Erro no cadastro do produto";
+			}
 		} else if ("Alterar".equals(pAction)) {
-			produto.alterar();
-			request.setAttribute("acao", "sucesso");
+			if (produto.alterar()) {
+				acao = "success";
+				mensagem = "Produto alterado com sucesso";
+			} else {
+				mensagem = "Erro na alteração do produto";
+				acao = "danger";
+			}
 		} else if ("Excluir".equals(pAcao)) {
-			produto.excluir();
-			request.setAttribute("acao", "sucesso");
+			if (produto.excluir()) {
+				mensagem = "Produto excluído com sucesso";
+				acao = "success";
+			} else {
+				mensagem = "Erro na exclusão do produto";
+				acao = "danger";
+			}
 		} else if ("Carregar".equals(pAcao)) {
 			ProdutoDAO dao = new ProdutoDAO();
 			ProdutoDTO dto = dao.carregar(id);
@@ -59,10 +74,11 @@ public class ProdutoController extends HttpServlet {
 			request.setAttribute("produto", dto);
 		}
 		if ("Pesquisar".equals(pAction)) {
-			List<Produto> produtos = produto.listar();
+			List<ProdutoDTO> produtos = produto.listar();
 			request.setAttribute("produtos", produtos);
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("/produtos.jsp");
+		request.setAttribute("acao", acao);
+		request.setAttribute("mensagem", mensagem);		RequestDispatcher rd = request.getRequestDispatcher("/produtos.jsp");
 		rd.forward(request, response);
 	}
 }

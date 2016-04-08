@@ -10,19 +10,21 @@ import util.ConnectionFactory;
 
 public class ProdutoDAO {
 
-	public void incluir(ProdutoDTO dto) {
+	public boolean incluir(ProdutoDTO dto) {
 		String sql = "insert into produto (codigo,descricao,valorvenda) values (?,?,?)";
 		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sql)) {
 			stm.setString(1, dto.getCodigo());
 			stm.setString(2, dto.getDescricao());
 			stm.setDouble(3, dto.getValorvenda());
 			stm.execute();
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 
-	public void alterar(ProdutoDTO dto) {
+	public boolean alterar(ProdutoDTO dto) {
 		String sql = "update produto set codigo=?,descricao=?,valorvenda=? where id=?";
 
 		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sql)) {
@@ -31,18 +33,22 @@ public class ProdutoDAO {
 			stm.setDouble(3, dto.getValorvenda());
 			stm.setLong(4, dto.getId());
 			stm.execute();
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 
-	public void excluir(ProdutoDTO dto) {
+	public boolean excluir(ProdutoDTO dto) {
 		String sql = "delete from produto where id=?";
 		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sql)) {
 			stm.setLong(1, dto.getId());
 			stm.execute();
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 

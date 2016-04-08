@@ -5,9 +5,18 @@ public class ProdutoDTO {
 	private String codigo;
 	private String descricao;
 	private Double valorvenda;
-	
 	transient String acao;
 	
+	public ProdutoDTO() {
+	}
+
+	public ProdutoDTO(Long id, String codigo, String descricao, Double valorvenda) {
+		this.id = id;
+		this.codigo = codigo;
+		this.descricao = descricao;
+		this.valorvenda = valorvenda;
+	}
+
 	public Long getId() {
 		return id;
 	}

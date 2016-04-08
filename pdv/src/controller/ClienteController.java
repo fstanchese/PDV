@@ -20,7 +20,8 @@ public class ClienteController extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		String acao = null;
+		String mensagem = null;
 		String pAcao = request.getParameter("acao");
 		String pAction = request.getParameter("action");
 		String pNome = request.getParameter("nome");
@@ -36,17 +37,32 @@ public class ClienteController extends HttpServlet {
 			}
 		}
 
-		Cliente cliente = new Cliente(id, pNome, pFone, pCpf, pEmail );
+		Cliente cliente = new Cliente(id, pNome, pFone, pCpf, pEmail);
 
 		if ("Incluir".equals(pAction)) {
-			cliente.criar();
-			request.setAttribute("acao", "sucesso");
+			if (cliente.criar()) {
+				acao = "success";
+				mensagem = "Cliente cadastrado com sucesso";
+			} else {
+				acao = "danger";
+				mensagem = "Erro no cadastro do cliente";
+			}
 		} else if ("Alterar".equals(pAction)) {
-			cliente.alterar();
-			request.setAttribute("acao", "sucesso");
+			if (cliente.alterar()) {
+				acao = "success";
+				mensagem = "Cliente alterado com sucesso";
+			} else {
+				mensagem = "Erro na alteração do cliente";
+				acao = "danger";
+			}
 		} else if ("Excluir".equals(pAcao)) {
-			cliente.excluir();
-			request.setAttribute("acao", "sucesso");
+			if (cliente.excluir()) {
+				mensagem = "Cliente excluído com sucesso";
+				acao = "success";
+			} else {
+				mensagem = "Erro na exclusão do cliente";
+				acao = "danger";
+			}
 		} else if ("Carregar".equals(pAcao)) {
 			ClienteDAO dao = new ClienteDAO();
 			ClienteDTO dto = dao.carregar(id);
@@ -54,9 +70,11 @@ public class ClienteController extends HttpServlet {
 			request.setAttribute("cliente", dto);
 		}
 		if ("Pesquisar".equals(pAction)) {
-			List<Cliente> clientes = cliente.listar(pBusca);
+			List<ClienteDTO> clientes = cliente.listar(pBusca);
 			request.setAttribute("clientes", clientes);
 		}
+		request.setAttribute("acao", acao);
+		request.setAttribute("mensagem", mensagem);
 		RequestDispatcher rd = request.getRequestDispatcher("/clientes.jsp");
 		rd.forward(request, response);
 	}

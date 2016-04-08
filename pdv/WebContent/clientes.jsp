@@ -147,13 +147,13 @@
 			</c:if>
 		</form>
 	</div>
-	<c:if test="${acao == 'sucesso'}">
+	<c:if test="${not empty acao}">
 		<script type="text/javascript">
 		$(document).ready(function() { 
 			$(function() {
 			    setTimeout(function() {
-			        $.bootstrapGrowl("Operação efetuada com sucesso.", { type:'success' ,align:'center'});
-			    }, 40);	
+			         $.bootstrapGrowl("${mensagem}", { type:'${acao}' ,align:'center'});
+			      }, 40);	
 			});
 		});
 	</script>	

@@ -75,18 +75,17 @@ public class Cliente {
 		this.acao = acao;
 	}
 
-	public void criar() {
+	public boolean criar() {
 		ClienteDAO dao = new ClienteDAO();
 		ClienteDTO dto = new ClienteDTO();
 		dto.setNome(nome);
 		dto.setFone(fone);
 		dto.setCpf(cpf);
 		dto.setEmail(email);
-
-		dao.incluir(dto);
+		return dao.incluir(dto);
 	}
 
-	public void alterar() {
+	public boolean alterar() {
 		ClienteDAO dao = new ClienteDAO();
 		ClienteDTO dto = new ClienteDTO();
 		dto.setId(id);
@@ -94,25 +93,27 @@ public class Cliente {
 		dto.setFone(fone);
 		dto.setCpf(cpf);
 		dto.setEmail(email);
-		dao.alterar(dto);
+		return dao.alterar(dto);
 	}
 
-	public void excluir() {
+	public boolean excluir() {
 		ClienteDAO dao = new ClienteDAO();
 		ClienteDTO dto = new ClienteDTO();
 		dto.setId(id);
-		dao.excluir(dto);
+		return dao.excluir(dto);
 	}
 
 	public void carregar() {
 		ClienteDAO dao = new ClienteDAO();
 		ClienteDTO dto = dao.carregar(id);
-		nome = dto.getNome();
-		fone = dto.getFone();
+		this.nome = dto.getNome();
+		this.fone = dto.getFone();
+		this.email = dto.getEmail();
+		this.cpf = dto.getCpf();
 	}
 
-	public List<Cliente> listar(String busca) {
-		List<Cliente> clientes = new ArrayList<>();
+	public List<ClienteDTO> listar(String busca) {
+		List<ClienteDTO> clientes = new ArrayList<>();
 		String sqlSelect = null;
         if (busca.isEmpty()) {
         	sqlSelect = "SELECT id, nome, fone, cpf,email FROM cliente order by nome";
@@ -132,7 +133,7 @@ public class Cliente {
 					String fone = rs.getString("fone");
 					String cpf = rs.getString("cpf");
 					String email = rs.getString("email");
-					Cliente cliente = new Cliente(id, nome, fone, cpf, email );
+					ClienteDTO cliente = new ClienteDTO(id, nome, fone, cpf, email );
 					clientes.add(cliente);
 				}
 			} catch (SQLException e) {
