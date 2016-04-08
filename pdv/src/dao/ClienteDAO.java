@@ -13,13 +13,17 @@ public class ClienteDAO {
 	public boolean incluir(ClienteDTO dto) {
 		String sql = "INSERT INTO cliente( nome, fone, cpf, email ) VALUES (?, ?, ?, ?)";
 
-		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sql);) {
+		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);) {
 			stm.setString(1, dto.getNome());
 			stm.setString(2, dto.getFone());
 			stm.setString(3, dto.getCpf());
 			stm.setString(4, dto.getEmail());
 			stm.execute();
-			return true;
+			ResultSet generatedKeys = stm.getGeneratedKeys();
+	        if (generatedKeys.next()) {
+	        	dto.setId(generatedKeys.getLong(1));
+	        }
+	        return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;

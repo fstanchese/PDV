@@ -20,12 +20,14 @@
 				rules : {
 					codigo : "required",
 					descricao : { required:true,minlength: 3 },
-					valorvenda : { required:true, min:0.01, max:9999.99 }
+					valorvenda : { required:true, min:0.01, max:9999.99 },
+					qtde : { required:true, min:0, max:999 }
 				},
 				messages : {
 					codigo : "Este campo não pode ser vazio!",
 					descricao : "Este campo não pode ser vazio!",
-					valorvenda : "Minimo R$ 0,01 Máximo R$ 9.999,99 !"
+					valorvenda : "Minimo R$ 0,01 Máximo R$ 9.999,99 !",
+					qtde : "Minimo 0 Máximo 999 !"
 				}
 			});
 		});
@@ -105,7 +107,10 @@
 				<label for="valorvenda">Valor Venda : </label> 
 				<input class="form-control"	 onKeyPress="return(MascaraMoeda(this,'','.',event))" id="valorvenda" name="valorvenda" value="${produto.valorvenda}" />
 			</div>
-			</div>
+      		<div class="form-group col-xs-3">
+				<label for="qtde">Quantidade Estoque : </label> 
+				<input class="form-control"	 id="qtde" name="qtde" value="${produto.qtde}" />
+			</div>			</div>
   			<div class="row">
 			<div class="col-xs-12">
 				<button name="action" class="btn btn-primary" value="Incluir">Incluir</button>
@@ -137,20 +142,20 @@
 						<table class="table table-striped">
 							<thead>
 								<tr>
-									<th align=center>Id</th>
 									<th align=center>Código</th>
 									<th align=center>Descrição</th>
 									<th align=center>Valor Venda</th>
+									<th align=center>Estoque</th>
 									<th width="10%">Ação</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var="produto" items="${produtos}">
 									<tr>
-										<td>&nbsp;${produto.id}</td>
 										<td>&nbsp;${produto.codigo}</td>
 										<td>&nbsp;${produto.descricao}</td>
 										<td>&nbsp;${produto.valorvenda}</td>
+										<td>&nbsp;${produto.qtde}</td>
 										<td width="10%">
 										<a class="btn btn-success" onclick="javascript:document.f1.acao.value='Carregar';document.f1.id.value=${produto.id};document.f1.submit();"><i class="glyphicon glyphicon-pencil"></i></a> 
 										<a class="btn btn-danger" onclick="javascript:document.f1.acao.value='Excluir';document.f1.id.value=${produto.id};document.f1.submit();"><i class="glyphicon glyphicon-remove-sign"></i></a>

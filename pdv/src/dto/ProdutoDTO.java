@@ -5,16 +5,18 @@ public class ProdutoDTO {
 	private String codigo;
 	private String descricao;
 	private Double valorvenda;
+	private Integer qtde;
 	transient String acao;
 	
 	public ProdutoDTO() {
 	}
 
-	public ProdutoDTO(Long id, String codigo, String descricao, Double valorvenda) {
+	public ProdutoDTO(Long id, String codigo, String descricao, Double valorvenda, Integer qtde) {
 		this.id = id;
 		this.codigo = codigo;
 		this.descricao = descricao;
 		this.valorvenda = valorvenda;
+		this.qtde = qtde;
 	}
 
 	public Long getId() {
@@ -55,6 +57,14 @@ public class ProdutoDTO {
 	
 	public Double getValorvenda() {
 		return valorvenda;
+	}
+	
+	public void setQtde(Integer qtde) {
+		this.qtde = qtde;
+	}
+	
+	public Integer getQtde() {
+		return qtde;
 	}
 }
 

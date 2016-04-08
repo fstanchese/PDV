@@ -28,6 +28,8 @@ public class ProdutoController extends HttpServlet {
 		String pDescricao = request.getParameter("descricao");
 		String pId = request.getParameter("id");
 		String pValorVenda = request.getParameter("valorvenda");
+		String pQtde = request.getParameter("qtde");
+		
 		Long id = 0L;
 		if (pId != null) {
 			if (!pId.equals("")) {
@@ -39,9 +41,16 @@ public class ProdutoController extends HttpServlet {
 			if (!pValorVenda.equals("")) {
 				valorVenda = Double.parseDouble(pValorVenda);
 			}
-		}		
+		}
 		
-		Produto produto = new Produto(id, pCodigo, pDescricao, valorVenda);
+		Integer qtde = 0;
+		if (pQtde != null) {
+			if (!pQtde.equals("")) {
+				qtde = Integer.parseInt(pQtde);
+			}
+		}
+		
+		Produto produto = new Produto(id, pCodigo, pDescricao, valorVenda, qtde);
 
 		if ("Incluir".equals(pAction)) {
 			if (produto.criar()) {
@@ -76,9 +85,13 @@ public class ProdutoController extends HttpServlet {
 		if ("Pesquisar".equals(pAction)) {
 			List<ProdutoDTO> produtos = produto.listar();
 			request.setAttribute("produtos", produtos);
+		} else if ("success".equals(acao)) {
+			List<ProdutoDTO> produtos = produto.listarUltimoProdutoAcessado();
+			request.setAttribute("produtos", produtos);
 		}
 		request.setAttribute("acao", acao);
-		request.setAttribute("mensagem", mensagem);		RequestDispatcher rd = request.getRequestDispatcher("/produtos.jsp");
+		request.setAttribute("mensagem", mensagem);		
+		RequestDispatcher rd = request.getRequestDispatcher("/produtos.jsp");
 		rd.forward(request, response);
 	}
 }

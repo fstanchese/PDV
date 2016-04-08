@@ -72,6 +72,9 @@ public class ClienteController extends HttpServlet {
 		if ("Pesquisar".equals(pAction)) {
 			List<ClienteDTO> clientes = cliente.listar(pBusca);
 			request.setAttribute("clientes", clientes);
+		} else if ("success".equals(acao)){
+			List<ClienteDTO> clientes = cliente.listarUltimoClienteAcessado();
+			request.setAttribute("clientes", clientes);		
 		}
 		request.setAttribute("acao", acao);
 		request.setAttribute("mensagem", mensagem);

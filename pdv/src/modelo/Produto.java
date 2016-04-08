@@ -16,13 +16,15 @@ public class Produto {
 	private String codigo;
 	private String descricao;
 	private Double valorvenda;
+	private Integer qtde;
 	transient String acao;
 
-	public Produto(Long id, String codigo, String descricao, Double valorvenda) {
+	public Produto(Long id, String codigo, String descricao, Double valorvenda, Integer qtde) {
 		this.id = id;
 		this.codigo = codigo;
 		this.descricao = descricao;
 		this.valorvenda = valorvenda;
+		this.qtde = qtde;
 	}
 
 	public Long getId() {
@@ -56,6 +58,14 @@ public class Produto {
 	public Double getValorvenda() {
 		return valorvenda;
 	}
+
+	public void setQtde(Integer qtde) {
+		this.qtde = qtde;
+	}
+	
+	public Integer getQtde() {
+		return qtde;
+	}
 	
 	public String getAcao() {
 		return acao;
@@ -71,8 +81,11 @@ public class Produto {
 		dto.setCodigo(codigo);
 		dto.setDescricao(descricao);
 		dto.setValorvenda(valorvenda);
+		dto.setQtde(qtde);
 		dto.setAcao(acao);
-		return dao.incluir(dto);
+		boolean ret = dao.incluir(dto);
+		this.id = dto.getId();
+		return ret;
 	}
 	
 	public boolean alterar() {
@@ -82,6 +95,7 @@ public class Produto {
 		dto.setCodigo(codigo);
 		dto.setDescricao(descricao);
 		dto.setValorvenda(valorvenda);
+		dto.setQtde(qtde);
 		dto.setAcao(acao);
 		return dao.alterar(dto);		
 	}
@@ -93,17 +107,9 @@ public class Produto {
 		return dao.excluir(dto);		
 	}
 	
-	public void carregar() {
-		ProdutoDAO dao = new ProdutoDAO();
-		ProdutoDTO dto = dao.carregar(id);
-		this.codigo = dto.getCodigo();
-		this.descricao = dto.getDescricao();
-		this.valorvenda = dto.getValorvenda();
-	}
-
 	public List<ProdutoDTO> listar() {
 		List<ProdutoDTO> produtos = new ArrayList<>();
-		String sqlSelect = "SELECT id, codigo, descricao, valorvenda FROM produto order by descricao";
+		String sqlSelect = "SELECT id, codigo, descricao, valorvenda, qtde FROM produto order by descricao";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
 			try (ResultSet rs = stm.executeQuery();) {
@@ -112,7 +118,8 @@ public class Produto {
 					String pCodigo = rs.getString("codigo");
 					String pDescricao = rs.getString("descricao");
 					Double pValorVenda = rs.getDouble("valorvenda");
-					ProdutoDTO produto = new ProdutoDTO(pId, pCodigo, pDescricao, pValorVenda);
+					Integer pQtde = rs.getInt("qtde");
+					ProdutoDTO produto = new ProdutoDTO(pId, pCodigo, pDescricao, pValorVenda, pQtde);
 					produtos.add(produto);
 				}
 			} catch (SQLException e) {
@@ -124,9 +131,34 @@ public class Produto {
 		return produtos;		
 	}
 
+	public List<ProdutoDTO> listarUltimoProdutoAcessado() {
+		List<ProdutoDTO> produtos = new ArrayList<>();
+		String sqlSelect = "SELECT id, codigo, descricao, valorvenda, qtde FROM produto where id=?";
+		try (Connection conn = ConnectionFactory.obtemConexao();
+				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
+			stm.setLong(1, this.id);
+			try (ResultSet rs = stm.executeQuery();) {
+				if (rs.next()) {
+					Long pId = rs.getLong("id");
+					String pCodigo = rs.getString("codigo");
+					String pDescricao = rs.getString("descricao");
+					Double pValorVenda = rs.getDouble("valorvenda");
+					Integer pQtde = rs.getInt("qtde");
+					ProdutoDTO produto = new ProdutoDTO(pId, pCodigo, pDescricao, pValorVenda, pQtde);
+					produtos.add(produto);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e1) {
+			System.out.print(e1.getStackTrace());
+		}
+		return produtos;		
+	}
+	
 	@Override
 	public String toString() {
-		return "Produto [id=" + id + ", codigo=" + codigo + ", descricao=" + descricao + "]";
+		return "Produto [id=" + id + ", codigo=" + codigo + ", descricao=" + descricao + ", valorvenda=" + valorvenda
+				+ ", qtde=" + qtde + "]";
 	}
-
 }

@@ -25,6 +25,7 @@ CREATE TABLE `pdv`.`produto` (
   `codigo` VARCHAR(10) NOT NULL,
   `descricao` VARCHAR(100) NULL,
   `valorvenda` DECIMAL(6,2) NULL,
+  'qtde' DECIMAL(3) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `codigo_UNIQUE` (`codigo` ASC));
   
