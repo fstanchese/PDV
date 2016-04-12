@@ -5,6 +5,7 @@
 <link href="resources/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="resources/css/bootstrap-theme.min.css" rel="stylesheet"	type="text/css" />
 <link href="resources/css/custom.css" rel="stylesheet" type="text/css" />
+<link href="resources/css/style.css" rel="stylesheet" type="text/css" />
 <script src="resources/js/jquery.min.js" type="text/javascript"></script>
 <script src="resources/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="resources/js/jquery.maskedinput-1.3.1.min.js" type="text/javascript"></script>
@@ -82,9 +83,6 @@
 		}
 	</script>
 	<c:import url="cabecalho.jsp" />
-	<br>
-	<br>
-	<br>
 	<div class="container">
 		<h3 align="center">Cadastro de Produtos</h3>
 		<form id="formProduto" name="f1" action="produtos" method="post" role="form">
@@ -146,7 +144,7 @@
 									<th align=center>Descrição</th>
 									<th align=center>Valor Venda</th>
 									<th align=center>Estoque</th>
-									<th width="10%">Ação</th>
+									<th width="13%">Ação</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -156,9 +154,9 @@
 										<td>&nbsp;${produto.descricao}</td>
 										<td>&nbsp;${produto.valorvenda}</td>
 										<td>&nbsp;${produto.qtde}</td>
-										<td width="10%">
-										<a class="btn btn-success" onclick="javascript:document.f1.acao.value='Carregar';document.f1.id.value=${produto.id};document.f1.submit();"><i class="glyphicon glyphicon-pencil"></i></a> 
-										<a class="btn btn-danger" onclick="javascript:document.f1.acao.value='Excluir';document.f1.id.value=${produto.id};document.f1.submit();"><i class="glyphicon glyphicon-remove-sign"></i></a>
+										<td width="13%">
+										<a class="btn btn-success btn-xs" onclick="javascript:document.f1.acao.value='Carregar';document.f1.id.value=${produto.id};document.f1.submit();">Alterar</a> 
+										<a class="btn btn-danger btn-xs" onclick="javascript:document.f1.acao.value='Excluir';document.f1.id.value=${produto.id};document.f1.submit();">Excluir</a>
 										</td>
 									</tr>
 								</c:forEach>

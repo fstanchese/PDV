@@ -2,18 +2,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html>
 <head>
-<link href="resources/css/bootstrap.min.css" rel="stylesheet"
-	type="text/css" />
-<link href="resources/css/bootstrap-theme.min.css" rel="stylesheet"
-	type="text/css" />
+<link href="resources/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="resources/css/bootstrap-theme.min.css" rel="stylesheet"	type="text/css" />
+<link href="resources/css/zebra.dialog.css" rel="stylesheet" type="text/css" />
 <link href="resources/css/custom.css" rel="stylesheet" type="text/css" />
-
+<link href="resources/css/style.css" rel="stylesheet" type="text/css" />
 <script src="resources/js/jquery.min.js" type="text/javascript"></script>
 <script src="resources/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="resources/js/jquery.maskedinput-1.3.1.min.js"
-	type="text/javascript"></script>
+<script src="resources/js/jquery.maskedinput-1.3.1.min.js" type="text/javascript"></script>
 <script src="resources/js/jquery.validate.js" type="text/javascript"></script>
-<script src="resources/js/jquery.bootstrap-growl.js" type="text/javascript"></script>
+<script src="resources/js/jquery.bootstrap-growl.js" type="text/javascript"></script>	
+<script src="resources/js/zebra.dialog.js" type="text/javascript"></script>	
+<script src="resources/js/zebra.dialog.src.js" type="text/javascript"></script>	
 <meta charset="UTF-8">
 <title>Cadastro de Clientes</title>
 </head>
@@ -51,12 +51,35 @@
 				email : "Entre com um email válido!"
 			}
 		});
+		$(document).on('click','#excluir',function () {
+			$.Zebra_Dialog( '', 
+				{
+			   		'type': 'question',
+	  		  		'title': 'Excluir Cliente ?',
+					'keyboard' : false,
+					'overlay_close' : false,
+					'show_close_button' : false,
+		 	  		'buttons': 
+					[
+		 	      	  { caption:'Sim',callback:function() 
+			 	      	  {
+								$.ajax 
+								(
+									{
+									type: 'POST',
+									url: 'clientes',
+									data:{id: $("#excluir").val(), acao:"teste"}
+									}  
+								);
+			 	      	  }},
+		 	     	  { caption:'Não',callback:function() {}}
+		 	  		] 
+				}
+			);
+		}); 
 	});
 	</script>
 	<c:import url="cabecalho.jsp" />
-	<br>
-	<br>
-	<br>
 	<div class="container">
 		<h3 align="center">Cadastro de Clientes</h3>
 		<form id="formClientes" name="f1" action="clientes" method="post" role="form">
@@ -122,7 +145,7 @@
 									<th align=center>Celular</th>
 									<th align=center>E-Mail</th>
 									<th align=center>CPF</th>
-									<th width="10%">AÇÃO</th>
+									<th width="13%">Ação</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -132,12 +155,10 @@
 										<td>&nbsp;${cliente.fone}</td>
 										<td>&nbsp;${cliente.email}</td>
 										<td>&nbsp;${cliente.cpf}</td>
-										<td width="10%"><a class="btn btn-success"
-											onclick="javascript:document.f1.acao.value='Carregar';document.f1.id.value=${cliente.id};document.f1.submit();"><i
-												class="glyphicon glyphicon-pencil"></i></a> <a
-											class="btn btn-danger"
-											onclick="javascript:document.f1.acao.value='Excluir';document.f1.id.value=${cliente.id};document.f1.submit();"><i
-												class="glyphicon glyphicon-remove-sign"></i></a></td>
+										<td align="center" width="13%">
+										<a class="btn btn-success btn-xs" onclick="javascript:document.f1.acao.value='Carregar';document.f1.id.value=${cliente.id};document.f1.submit();">Alterar</a>
+										<button type="button" class="btn btn-danger btn-xs" id="excluir" value="${cliente.id}">Excluir</button>
+										</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -151,9 +172,7 @@
 		<script type="text/javascript">
 		$(document).ready(function() { 
 			$(function() {
-			    setTimeout(function() {
-			         $.bootstrapGrowl("${mensagem}", { type:'${acao}' ,align:'center'});
-			      }, 40);	
+			   $.bootstrapGrowl("${mensagem}", { type:'${acao}' ,align:'center'});
 			});
 		});
 	</script>	

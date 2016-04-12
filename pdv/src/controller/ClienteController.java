@@ -36,7 +36,7 @@ public class ClienteController extends HttpServlet {
 				id = Long.parseLong(pId);
 			}
 		}
-
+		System.out.println("id"+id+" acao"+pAcao);
 		Cliente cliente = new Cliente(id, pNome, pFone, pCpf, pEmail);
 
 		if ("Incluir".equals(pAction)) {
@@ -48,7 +48,7 @@ public class ClienteController extends HttpServlet {
 				mensagem = "Erro no cadastro do cliente";
 			}
 		} else if ("Alterar".equals(pAction)) {
-			if (cliente.alterar()) {
+			if (cliente.alterar() && id > 0) {
 				acao = "success";
 				mensagem = "Cliente alterado com sucesso";
 			} else {
@@ -56,7 +56,7 @@ public class ClienteController extends HttpServlet {
 				acao = "danger";
 			}
 		} else if ("Excluir".equals(pAcao)) {
-			if (cliente.excluir()) {
+			if (cliente.excluir() && id > 0) {
 				mensagem = "Cliente excluído com sucesso";
 				acao = "success";
 			} else {
