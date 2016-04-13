@@ -4,13 +4,16 @@
 <head>
 <link href="resources/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="resources/css/bootstrap-theme.min.css" rel="stylesheet"	type="text/css" />
+<link href="resources/css/zebra.dialog.css" rel="stylesheet" type="text/css" />
 <link href="resources/css/custom.css" rel="stylesheet" type="text/css" />
 <link href="resources/css/style.css" rel="stylesheet" type="text/css" />
 <script src="resources/js/jquery.min.js" type="text/javascript"></script>
 <script src="resources/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="resources/js/jquery.maskedinput-1.3.1.min.js" type="text/javascript"></script>
 <script src="resources/js/jquery.validate.js" type="text/javascript"></script>
-<script src="resources/js/jquery.bootstrap-growl.js" type="text/javascript"></script>
+<script src="resources/js/jquery.bootstrap-growl.js" type="text/javascript"></script>	
+<script src="resources/js/zebra.dialog.js" type="text/javascript"></script>	
+<script src="resources/js/zebra.dialog.src.js" type="text/javascript"></script>	
 <meta charset="UTF-8">
 <title>Cadastro de Produtos</title>
 </head>
@@ -32,6 +35,32 @@
 				}
 			});
 		});
+		$(document).on('click','#excluir',function () {
+			$.Zebra_Dialog( '', 
+				{
+			   		'type': 'question',
+	  		  		'title': 'Excluir Produto ?',
+					'keyboard' : false,
+					'overlay_close' : false,
+					'show_close_button' : false,
+		 	  		'buttons': 
+					[
+		 	      	  { caption:'Sim',callback:function() 
+			 	      	  {
+								$.ajax 
+								(
+									{
+									type: 'POST',
+									url: 'produtos',
+									data:{id: $("#excluir").val(), acao:"teste"}
+									}  
+								);
+			 	      	  }},
+		 	     	  { caption:'Não',callback:function() {}}
+		 	  		] 
+				}
+			);
+		}); 
 		function MascaraMoeda(objTextBox, SeparadorMilesimo, SeparadorDecimal,
 				e) {
 			var sep = 0;
@@ -156,7 +185,7 @@
 										<td>&nbsp;${produto.qtde}</td>
 										<td width="13%">
 										<a class="btn btn-success btn-xs" onclick="javascript:document.f1.acao.value='Carregar';document.f1.id.value=${produto.id};document.f1.submit();">Alterar</a> 
-										<a class="btn btn-danger btn-xs" onclick="javascript:document.f1.acao.value='Excluir';document.f1.id.value=${produto.id};document.f1.submit();">Excluir</a>
+										<button type="button" class="btn btn-danger btn-xs" id="excluir" value="${produto.id}">Excluir</button>
 										</td>
 									</tr>
 								</c:forEach>

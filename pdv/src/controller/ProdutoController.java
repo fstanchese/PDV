@@ -29,6 +29,7 @@ public class ProdutoController extends HttpServlet {
 		String pId = request.getParameter("id");
 		String pValorVenda = request.getParameter("valorvenda");
 		String pQtde = request.getParameter("qtde");
+		String pBusca = request.getParameter("busca");
 		
 		Long id = 0L;
 		if (pId != null) {
@@ -83,7 +84,7 @@ public class ProdutoController extends HttpServlet {
 			request.setAttribute("produto", dto);
 		}
 		if ("Pesquisar".equals(pAction)) {
-			List<ProdutoDTO> produtos = produto.listar();
+			List<ProdutoDTO> produtos = produto.listar(pBusca);
 			request.setAttribute("produtos", produtos);
 		} else if ("success".equals(acao)) {
 			List<ProdutoDTO> produtos = produto.listarUltimoProdutoAcessado();

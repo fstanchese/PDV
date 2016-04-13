@@ -107,12 +107,21 @@ public class Produto {
 		return dao.excluir(dto);		
 	}
 	
-	public List<ProdutoDTO> listar() {
+	public List<ProdutoDTO> listar(String busca) {
 		List<ProdutoDTO> produtos = new ArrayList<>();
-		String sqlSelect = "SELECT id, codigo, descricao, valorvenda, qtde FROM produto order by descricao";
+		String sqlSelect = null;
+        if (busca.isEmpty()) {
+        	sqlSelect = "SELECT * FROM produto order by descricao";
+        }
+		else {
+        	sqlSelect = "SELECT * FROM produto where descricao like ? order by descricao";		
+		}		
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
-			try (ResultSet rs = stm.executeQuery();) {
+	        if (!busca.isEmpty()) {
+	        	stm.setString(1, "%"+busca+"%");
+	        }			
+	        try (ResultSet rs = stm.executeQuery();) {
 				while (rs.next()) {
 					Long pId = rs.getLong("id");
 					String pCodigo = rs.getString("codigo");
