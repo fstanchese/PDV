@@ -164,7 +164,7 @@ public class Cliente {
 	
 	@Override
 	public String toString() {
-		return "Cliente [id=" + id + ", nome=" + nome + ", fone=" + fone + ", cpf=" + cpf + ", email=" + email + "]";
+		return "Cliente [id=" + id + ", nome=" + nome + "<br>, fone=" + fone + ", cpf=" + cpf + ", email=" + email + "]";
 	}
 
 }

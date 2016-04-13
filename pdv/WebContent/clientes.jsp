@@ -47,8 +47,8 @@
 				email : { email: true }
 			},
 			messages : {
-				nome : "Este campo n„o pode ser vazio!",
-				email : "Entre com um email v·lido!"
+				nome : "Este campo n√£o pode ser vazio!",
+				email : "Entre com um email v√°lido!"
 			}
 		});
 		$(document).on('click','#excluir',function () {
@@ -59,6 +59,7 @@
 					'keyboard' : false,
 					'overlay_close' : false,
 					'show_close_button' : false,
+		 	  		'source': {'inline': $("input[name='ClienteStr1']").val()},	
 		 	  		'buttons': 
 					[
 		 	      	  { caption:'Sim',callback:function() 
@@ -72,7 +73,7 @@
 									}  
 								);
 			 	      	  }},
-		 	     	  { caption:'N„o',callback:function() {}}
+		 	     	  { caption:'N√£o',callback:function() {}}
 		 	  		] 
 				}
 			);
@@ -145,7 +146,7 @@
 									<th align=center>Celular</th>
 									<th align=center>E-Mail</th>
 									<th align=center>CPF</th>
-									<th width="13%">AÁ„o</th>
+									<th width="13%">A√ß√£o</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -158,6 +159,7 @@
 										<td align="center" width="13%">
 										<a class="btn btn-success btn-xs" onclick="javascript:document.f1.acao.value='Carregar';document.f1.id.value=${cliente.id};document.f1.submit();">Alterar</a>
 										<button type="button" class="btn btn-danger btn-xs" id="excluir" value="${cliente.id}">Excluir</button>
+										<input name="ClienteStr${cliente.id}" type="hidden"  value="${cliente.nome}">
 										</td>
 									</tr>
 								</c:forEach>

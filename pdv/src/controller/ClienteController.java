@@ -36,7 +36,7 @@ public class ClienteController extends HttpServlet {
 				id = Long.parseLong(pId);
 			}
 		}
-		System.out.println("id"+id+" acao"+pAcao);
+		
 		Cliente cliente = new Cliente(id, pNome, pFone, pCpf, pEmail);
 
 		if ("Incluir".equals(pAction)) {
