@@ -20,20 +20,7 @@
 <body>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#formProduto").validate({
-				rules : {
-					codigo : "required",
-					descricao : { required:true,minlength: 3 },
-					valorvenda : { required:true, min:0.01, max:9999.99 },
-					qtde : { required:true, min:0, max:999 }
-				},
-				messages : {
-					codigo : "Este campo não pode ser vazio!",
-					descricao : "Este campo não pode ser vazio!",
-					valorvenda : "Minimo R$ 0,01 Máximo R$ 9.999,99 !",
-					qtde : "Minimo 0 Máximo 999 !"
-				}
-			});
+
 		});
 		$(document).on('click','#excluir',function () {
 			$.Zebra_Dialog( '', 
@@ -51,7 +38,7 @@
 								(
 									{
 									type: 'POST',
-									url: 'produtos',
+									url: 'vendas',
 									data:{id: $("#excluir").val(), acao:"teste"}
 									}  
 								);
@@ -61,61 +48,12 @@
 				}
 			);
 		}); 
-		function MascaraMoeda(objTextBox, SeparadorMilesimo, SeparadorDecimal,
-				e) {
-			var sep = 0;
-			var key = '';
-			var i = j = 0;
-			var len = len2 = 0;
-			var strCheck = '0123456789';
-			var aux = aux2 = '';
-			var whichCode = (window.Event) ? e.which : e.keyCode;
-			if (whichCode == 13 || whichCode == 8)
-				return true;
-			key = String.fromCharCode(whichCode); // Valor para o código da Chave  
-			if (strCheck.indexOf(key) == -1)
-				return false; // Chave inválida  
-			len = objTextBox.value.length;
-			for (i = 0; i < len; i++)
-				if ((objTextBox.value.charAt(i) != '0')
-						&& (objTextBox.value.charAt(i) != SeparadorDecimal))
-					break;
-			aux = '';
-			for (; i < len; i++)
-				if (strCheck.indexOf(objTextBox.value.charAt(i)) != -1)
-					aux += objTextBox.value.charAt(i);
-			aux += key;
-			len = aux.length;
-			if (len == 0)
-				objTextBox.value = '';
-			if (len == 1)
-				objTextBox.value = '0' + SeparadorDecimal + '0' + aux;
-			if (len == 2)
-				objTextBox.value = '0' + SeparadorDecimal + aux;
-			if (len > 2) {
-				aux2 = '';
-				for (j = 0, i = len - 3; i >= 0; i--) {
-					if (j == 3) {
-						aux2 += SeparadorMilesimo;
-						j = 0;
-					}
-					aux2 += aux.charAt(i);
-					j++;
-				}
-				objTextBox.value = '';
-				len2 = aux2.length;
-				for (i = len2 - 1; i >= 0; i--)
-					objTextBox.value += aux2.charAt(i);
-				objTextBox.value += SeparadorDecimal + aux.substr(len - 2, len);
-			}
-			return false;
-		}
 	</script>
 	<c:import url="cabecalho.jsp" />
 	<div class="container">
-		<h3 align="center">Cadastro de Produtos</h3>
-		<form id="formProduto" name="f1" action="produtos" method="post" role="form">
-			<input id="pId" type="hidden" name="id" value="${produto.id}">
+		<h3 align="center">Vendas</h3>
+		<form id="formProduto" name="f1" action="vendas" method="post" role="form">
+			<input id="pId" type="hidden" name="id" value="${venda.id}">
 			<input id="pAcao" type="hidden" name="acao">
   			<div class="row">
       		<div class="form-group col-xs-3">
@@ -135,22 +73,19 @@
 				<input class="form-control"	 onKeyPress="return(MascaraMoeda(this,'','.',event))" id="valorvenda" name="valorvenda" value="${produto.valorvenda}" />
 			</div>
       		<div class="form-group col-xs-3">
-				<label for="qtde">Quantidade Estoque : </label> 
+				<label for="qtde">Quantidade : </label> 
 				<input class="form-control"	 id="qtde" name="qtde" value="${produto.qtde}" />
 			</div>			</div>
   			<div class="row">
 			<div class="col-xs-12">
 				<button name="action" class="btn btn-primary" value="Incluir">Incluir</button>
-				<c:if test="${produto.acao == 'Carregar'}">
-					<button name="action" class="btn btn-primary" type="submit" value="Alterar">Alterar</button>
-				</c:if>
 				<a href="produtos" class="btn btn-default">Cancelar</a>
 			</div>
 			</div>
 		</form>
 	</div>
 	<div class="container">
-		<form name="f2" action="produtos" method="post" role="form">
+		<form name="f2" action="vendas" method="post" role="form">
 			<div class="col-md-12">
 				<div class="input-group h2">
 					<input name="busca" class="form-control" id="search" type="text" placeholder="Pesquisar Produtos (deixe vazio para trazer todos)">
