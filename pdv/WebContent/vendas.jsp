@@ -97,52 +97,32 @@
 			</div>
 		</form>
 	</div>
-	<c:if test="${produtos[0].id > 0}">
-		<c:if test="${produto.acao != 'Carregar'}">
-			<br>
-			<br>
-			<div class="table-responsive col-md-12">
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th align=center>CÃ³digo</th>
-							<th align=center>DescriÃ§Ã£o</th>
-							<th align=center>Valor Venda</th>
-							<th align=center>Qtde</th>
-							<th width="13%">AÃ§Ã£o</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="produto" items="${produtos}">
-							<tr>
-								<td>&nbsp;${produto.codigo}</td>
-								<td>&nbsp;${produto.descricao}</td>
-								<td>&nbsp;${produto.valorvenda}</td>
-								<td>&nbsp;${produto.qtde}</td>
-								<td width="13%">
-									<button type="button" class="btn btn-danger btn-xs"
-										id="excluir" value="${produto.id}">Excluir</button>
-								</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
-		</c:if>
-	</c:if>
-	<c:if test="${not empty acao}">
-		<script type="text/javascript">
-			$(document).ready(function() {
-				$(function() {
-					setTimeout(function() {
-						$.bootstrapGrowl("${mensagem}", {
-							type : '${acao}',
-							align : 'center'
-						});
-					}, 40);
-				});
-			});
-		</script>
+	<br>
+	<br>
+	<c:if test="${carrinho[0].quantidade > 0}">
+	<div class="table-responsive col-md-12">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th align=center>Código</th>
+					<th align=center>Descrição</th>
+					<th align=center>Valor Venda</th>
+					<th align=center>Qtde</th>
+					<th width="13%">Ação</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="item" items="${carrinho}">
+					<tr>
+						<td>&nbsp;${item.getProduto().getDescricao()}</td>
+						<td width="13%">
+							<button type="button" class="btn btn-danger btn-xs"	id="excluir" value="${carrinho.id}">Excluir</button>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
 	</c:if>
 </body>
 </html>

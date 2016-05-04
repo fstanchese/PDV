@@ -19,6 +19,8 @@ public class Produto {
 	private Integer qtde;
 	transient String acao;
 
+	public Produto() {}
+	
 	public Produto(Long id, String codigo, String descricao, Double valorvenda, Integer qtde) {
 		this.id = id;
 		this.codigo = codigo;

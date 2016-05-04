@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class CarrinhoDeCompras {
+public class CarrinhoDeCompra {
 
 	private Long id;
 	private List<ItemDeCompra> itens;
