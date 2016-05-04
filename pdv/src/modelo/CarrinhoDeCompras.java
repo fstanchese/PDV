@@ -18,7 +18,7 @@ public class CarrinhoDeCompras {
 	}
 	
 	public void removerItem(ItemDeCompra itemRemove){
-		for(Iterator i = itens.iterator(); i.hasNext();) {
+		for(Iterator<ItemDeCompra> i = itens.iterator(); i.hasNext();) {
 			ItemDeCompra item = (ItemDeCompra) i.next();
 			if(item.getProduto().getId()== itemRemove.getProduto().getId()) {
 				i.remove();
