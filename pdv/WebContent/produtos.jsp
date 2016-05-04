@@ -2,18 +2,23 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html>
 <head>
-<link href="resources/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/css/bootstrap-theme.min.css" rel="stylesheet"	type="text/css" />
-<link href="resources/css/zebra.dialog.css" rel="stylesheet" type="text/css" />
+<link href="resources/css/bootstrap.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="resources/css/bootstrap-theme.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="resources/css/zebra.dialog.css" rel="stylesheet"
+	type="text/css" />
 <link href="resources/css/custom.css" rel="stylesheet" type="text/css" />
 <link href="resources/css/style.css" rel="stylesheet" type="text/css" />
 <script src="resources/js/jquery.min.js" type="text/javascript"></script>
 <script src="resources/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="resources/js/jquery.maskedinput-1.3.1.min.js" type="text/javascript"></script>
+<script src="resources/js/jquery.maskedinput-1.3.1.min.js"
+	type="text/javascript"></script>
 <script src="resources/js/jquery.validate.js" type="text/javascript"></script>
-<script src="resources/js/jquery.bootstrap-growl.js" type="text/javascript"></script>	
-<script src="resources/js/zebra.dialog.js" type="text/javascript"></script>	
-<script src="resources/js/zebra.dialog.src.js" type="text/javascript"></script>	
+<script src="resources/js/jquery.bootstrap-growl.js"
+	type="text/javascript"></script>
+<script src="resources/js/zebra.dialog.js" type="text/javascript"></script>
+<script src="resources/js/zebra.dialog.src.js" type="text/javascript"></script>
 <meta charset="UTF-8">
 <title>Cadastro de Produtos</title>
 </head>
@@ -52,9 +57,9 @@
 									{
 									type: 'POST',
 									url: 'produtos',
-									data:{id: $("#excluir").val(), acao:"teste"}
+									data:{id: $("#excluir").val(), acao:"Excluir"}
 									}  
-								);
+								).done(function () { $("#linha"+$("#excluir").val()).hide() });
 			 	      	  }},
 		 	     	  { caption:'Não',callback:function() {}}
 		 	  		] 
@@ -114,38 +119,45 @@
 	<c:import url="cabecalho.jsp" />
 	<div class="container">
 		<h3 align="center">Cadastro de Produtos</h3>
-		<form id="formProduto" name="f1" action="produtos" method="post" role="form">
+		<form id="formProduto" name="f1" action="produtos" method="post"
+			role="form">
 			<input id="pId" type="hidden" name="id" value="${produto.id}">
 			<input id="pAcao" type="hidden" name="acao">
-  			<div class="row">
-      		<div class="form-group col-xs-3">
-				<label for="codigo">Codigo : </label> 
-				<input class="form-control" type=text maxlength="10" id="codigo" name="codigo" value="${produto.codigo}" />
+			<div class="row">
+				<div class="form-group col-xs-3">
+					<label for="codigo">Codigo : </label> <input class="form-control"
+						type=text maxlength="10" id="codigo" name="codigo"
+						value="${produto.codigo}" />
+				</div>
 			</div>
+			<div class="row">
+				<div class="form-group col-xs-9">
+					<label for="descricao">Descrição : </label> <input
+						class="form-control" type=text maxlength="100" id="descricao"
+						name="descricao" value="${produto.descricao}" />
+				</div>
 			</div>
-  			<div class="row">
-      		<div class="form-group col-xs-9">
-				<label for="descricao">Descrição : </label> 
-				<input class="form-control" type=text  maxlength="100" id="descricao" name="descricao" value="${produto.descricao}" />
+			<div class="row">
+				<div class="form-group col-xs-3">
+					<label for="valorvenda">Valor Venda : </label> <input
+						class="form-control"
+						onKeyPress="return(MascaraMoeda(this,'','.',event))"
+						id="valorvenda" name="valorvenda" value="${produto.valorvenda}" />
+				</div>
+				<div class="form-group col-xs-3">
+					<label for="qtde">Quantidade Estoque : </label> <input
+						class="form-control" id="qtde" name="qtde" value="${produto.qtde}" />
+				</div>
 			</div>
-			</div>
-  			<div class="row">
-      		<div class="form-group col-xs-3">
-				<label for="valorvenda">Valor Venda : </label> 
-				<input class="form-control"	 onKeyPress="return(MascaraMoeda(this,'','.',event))" id="valorvenda" name="valorvenda" value="${produto.valorvenda}" />
-			</div>
-      		<div class="form-group col-xs-3">
-				<label for="qtde">Quantidade Estoque : </label> 
-				<input class="form-control"	 id="qtde" name="qtde" value="${produto.qtde}" />
-			</div>			</div>
-  			<div class="row">
-			<div class="col-xs-12">
-				<button name="action" class="btn btn-primary" value="Incluir">Incluir</button>
-				<c:if test="${produto.acao == 'Carregar'}">
-					<button name="action" class="btn btn-primary" type="submit" value="Alterar">Alterar</button>
-				</c:if>
-				<a href="produtos" class="btn btn-default">Cancelar</a>
-			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<button name="action" class="btn btn-primary" value="Incluir">Incluir</button>
+					<c:if test="${produto.acao == 'Carregar'}">
+						<button name="action" class="btn btn-primary" type="submit"
+							value="Alterar">Alterar</button>
+					</c:if>
+					<a href="produtos" class="btn btn-default">Cancelar</a>
+				</div>
 			</div>
 		</form>
 	</div>
@@ -153,9 +165,11 @@
 		<form name="f2" action="produtos" method="post" role="form">
 			<div class="col-md-12">
 				<div class="input-group h2">
-					<input name="busca" class="form-control" id="search" type="text" placeholder="Pesquisar Produtos (deixe vazio para trazer todos)">
+					<input name="busca" class="form-control" id="search" type="text"
+						placeholder="Pesquisar Produtos (deixe vazio para trazer todos)">
 					<span class="input-group-btn">
-						<button name="action" class="btn btn-primary" type="submit" value="Pesquisar">
+						<button name="action" class="btn btn-primary" type="submit"
+							value="Pesquisar">
 							<span class="glyphicon glyphicon-search"></span>
 						</button>
 					</span>
@@ -178,15 +192,15 @@
 							</thead>
 							<tbody>
 								<c:forEach var="produto" items="${produtos}">
-									<tr>
+									<tr id="linha${produto.id}">
 										<td>&nbsp;${produto.codigo}</td>
 										<td>&nbsp;${produto.descricao}</td>
 										<td>&nbsp;${produto.valorvenda}</td>
 										<td>&nbsp;${produto.qtde}</td>
-										<td width="13%">
-										<a class="btn btn-success btn-xs" onclick="javascript:document.f1.acao.value='Carregar';document.f1.id.value=${produto.id};document.f1.submit();">Alterar</a> 
-										<button type="button" class="btn btn-danger btn-xs" id="excluir" value="${produto.id}">Excluir</button>
-										</td>
+										<td width="13%"><a class="btn btn-success btn-xs"
+											onclick="javascript:document.f1.acao.value='Carregar';document.f1.id.value=${produto.id};document.f1.submit();">Alterar</a>
+											<button type="button" class="btn btn-danger btn-xs"
+												id="excluir" value="${produto.id}">Excluir</button></td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -205,7 +219,7 @@
 			      }, 40);	
 			});
 		});
-	</script>	
+	</script>
 	</c:if>
-	</body>
+</body>
 </html>

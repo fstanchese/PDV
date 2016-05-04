@@ -2,23 +2,28 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html>
 <head>
-<link href="resources/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/css/bootstrap-theme.min.css" rel="stylesheet"	type="text/css" />
-<link href="resources/css/zebra.dialog.css" rel="stylesheet" type="text/css" />
+<link href="resources/css/bootstrap.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="resources/css/bootstrap-theme.min.css" rel="stylesheet"
+	type="text/css" />
+<link href="resources/css/zebra.dialog.css" rel="stylesheet"
+	type="text/css" />
 <link href="resources/css/custom.css" rel="stylesheet" type="text/css" />
 <link href="resources/css/style.css" rel="stylesheet" type="text/css" />
 <script src="resources/js/jquery.min.js" type="text/javascript"></script>
 <script src="resources/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="resources/js/jquery.maskedinput-1.3.1.min.js" type="text/javascript"></script>
+<script src="resources/js/jquery.maskedinput-1.3.1.min.js"
+	type="text/javascript"></script>
 <script src="resources/js/jquery.validate.js" type="text/javascript"></script>
-<script src="resources/js/jquery.bootstrap-growl.js" type="text/javascript"></script>	
-<script src="resources/js/zebra.dialog.js" type="text/javascript"></script>	
-<script src="resources/js/zebra.dialog.src.js" type="text/javascript"></script>	
+<script src="resources/js/jquery.bootstrap-growl.js"
+	type="text/javascript"></script>
+<script src="resources/js/zebra.dialog.js" type="text/javascript"></script>
+<script src="resources/js/zebra.dialog.src.js" type="text/javascript"></script>
 <meta charset="UTF-8">
 <title>Cadastro de Clientes</title>
 </head>
 <body>
-<script type="text/javascript">
+	<script type="text/javascript">
 	$(document).ready(function() {    
 		$(function() {
 			$.mask.definitions['~'] = '[+-]';
@@ -69,9 +74,9 @@
 									{
 									type: 'POST',
 									url: 'clientes',
-									data:{id: $("#excluir").val(), acao:"teste"}
-									}.done(function () {})  
-								);
+									data:{id: $("#excluir").val(), acao:"Excluir"}
+									}  
+								).done(function () { $("#linha"+$("#excluir").val()).hide() });
 			 	      	  }},
 		 	     	  { caption:'Não',callback:function() {}}
 		 	  		] 
@@ -83,35 +88,41 @@
 	<c:import url="cabecalho.jsp" />
 	<div class="container">
 		<h3 align="center">Cadastro de Clientes</h3>
-		<form id="formClientes" name="f1" action="clientes" method="post" role="form">
+		<form id="formClientes" name="f1" action="clientes" method="post"
+			role="form">
 			<input id="pId" type="hidden" name="id" value="${cliente.id}">
 			<input id="pAcao" type="hidden" name="acao">
 			<div class="col-md-12">
 				<div class="row">
 					<div class="form-group col-md-12">
-						<label for="nome">Nome</label> 
-						<input type="text" class="form-control" name="nome" id="nome" maxlength="100" value="${cliente.nome}">
+						<label for="nome">Nome</label> <input type="text"
+							class="form-control" name="nome" id="nome" maxlength="100"
+							value="${cliente.nome}">
 					</div>
 				</div>
 				<div class="row">
 					<div class="form-group col-md-4">
-						<label for="fone">Celular</label> 
-						<input type="tel" class="form-control" name="fone" id="fone" maxlength="15"	value="${cliente.fone}">
+						<label for="fone">Celular</label> <input type="tel"
+							class="form-control" name="fone" id="fone" maxlength="15"
+							value="${cliente.fone}">
 					</div>
 					<div class="form-group col-md-4">
-						<label for="email">E-Mail</label> 
-						<input type="email" class="form-control" name="email" id="email" maxlength="60"	value="${cliente.email}">
+						<label for="email">E-Mail</label> <input type="email"
+							class="form-control" name="email" id="email" maxlength="60"
+							value="${cliente.email}">
 					</div>
 					<div class="form-group col-md-4">
-						<label for="cpf">CPF : </label>
-						<input type=text class="form-control" maxlength="15" size="15" name="cpf" value="${cliente.cpf}" />
+						<label for="cpf">CPF : </label> <input type=text
+							class="form-control" maxlength="15" size="15" name="cpf"
+							value="${cliente.cpf}" />
 					</div>
 				</div>
 				<div id="actions" class="row">
 					<div class="col-md-12">
 						<button name="action" class="btn btn-primary" value="Incluir">Incluir</button>
 						<c:if test="${cliente.acao == 'Carregar'}">
-							<button name="action" class="btn btn-primary" type="submit" value="Alterar">Alterar</button>
+							<button name="action" class="btn btn-primary" type="submit"
+								value="Alterar">Alterar</button>
 						</c:if>
 						<a href="clientes" class="btn btn-default">Cancelar</a>
 					</div>
@@ -151,16 +162,18 @@
 							</thead>
 							<tbody>
 								<c:forEach var="cliente" items="${clientes}">
-									<tr>
+									<tr id="linha${cliente.id}">
 										<td>&nbsp;${cliente.nome}</td>
 										<td>&nbsp;${cliente.fone}</td>
 										<td>&nbsp;${cliente.email}</td>
 										<td>&nbsp;${cliente.cpf}</td>
-										<td align="center" width="13%">
-										<a class="btn btn-success btn-xs" onclick="javascript:document.f1.acao.value='Carregar';document.f1.id.value=${cliente.id};document.f1.submit();">Alterar</a>
-										<button type="button" class="btn btn-danger btn-xs" id="excluir" value="${cliente.id}">Excluir</button>
-										<input name="ClienteStr${cliente.id}" type="hidden"  value="${cliente.nome}">
-										</td>
+										<td align="center" width="13%"><a
+											class="btn btn-success btn-xs"
+											onclick="javascript:document.f1.acao.value='Carregar';document.f1.id.value=${cliente.id};document.f1.submit();">Alterar</a>
+											<button type="button" class="btn btn-danger btn-xs"
+												id="excluir" value="${cliente.id}">Excluir</button> <input
+											name="ClienteStr${cliente.id}" type="hidden"
+											value="${cliente.nome}"></td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -177,7 +190,7 @@
 			   $.bootstrapGrowl("${mensagem}", { type:'${acao}' ,align:'center'});
 			});
 		});
-	</script>	
+	</script>
 	</c:if>
 </body>
 </html>
