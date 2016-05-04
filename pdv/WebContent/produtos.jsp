@@ -77,9 +77,9 @@
 			var whichCode = (window.Event) ? e.which : e.keyCode;
 			if (whichCode == 13 || whichCode == 8)
 				return true;
-			key = String.fromCharCode(whichCode); // Valor para o código da Chave  
+			key = String.fromCharCode(whichCode); // Valor para o cï¿½digo da Chave  
 			if (strCheck.indexOf(key) == -1)
-				return false; // Chave inválida  
+				return false; // Chave invï¿½lida  
 			len = objTextBox.value.length;
 			for (i = 0; i < len; i++)
 				if ((objTextBox.value.charAt(i) != '0')
@@ -125,7 +125,7 @@
 			<input id="pAcao" type="hidden" name="acao">
 			<div class="row">
 				<div class="form-group col-xs-3">
-					<label for="codigo">Codigo : </label> <input class="form-control"
+					<label for="codigo">Código : </label> <input class="form-control"
 						type=text maxlength="10" id="codigo" name="codigo"
 						value="${produto.codigo}" />
 				</div>

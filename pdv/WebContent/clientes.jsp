@@ -52,8 +52,8 @@
 				email : { email: true }
 			},
 			messages : {
-				nome : "Este campo n√£o pode ser vazio!",
-				email : "Entre com um email v√°lido!"
+				nome : "Este campo n„o pode ser vazio!",
+				email : "Entre com um email v·lido!"
 			}
 		});
 		$(document).on('click','#excluir',function () {
@@ -78,7 +78,7 @@
 									}  
 								).done(function () { $("#linha"+$("#excluir").val()).hide() });
 			 	      	  }},
-		 	     	  { caption:'N√£o',callback:function() {}}
+		 	     	  { caption:'N„o',callback:function() {}}
 		 	  		] 
 				}
 			);
@@ -157,7 +157,7 @@
 									<th align=center>Celular</th>
 									<th align=center>E-Mail</th>
 									<th align=center>CPF</th>
-									<th width="13%">A√ß√£o</th>
+									<th width="13%">AÁ„o</th>
 								</tr>
 							</thead>
 							<tbody>
