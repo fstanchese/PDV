@@ -27,32 +27,32 @@
 		$(document).ready(function() {
 
 		});
-		$(document).on('click','#excluir',function () {
-			$.Zebra_Dialog( '', 
-				{
-			   		'type': 'question',
-	  		  		'title': 'Excluir Produto ?',
-					'keyboard' : false,
-					'overlay_close' : false,
-					'show_close_button' : false,
-		 	  		'buttons': 
-					[
-		 	      	  { caption:'Sim',callback:function() 
-			 	      	  {
-								$.ajax 
-								(
-									{
-									type: 'POST',
-									url: 'vendas',
-									data:{id: $("#excluir").val(), acao:"teste"}
-									}  
-								);
-			 	      	  }},
-		 	     	  { caption:'Não',callback:function() {}}
-		 	  		] 
-				}
-			);
-		}); 
+		$(document).on('click', '#excluir', function() {
+			$.Zebra_Dialog('', {
+				'type' : 'question',
+				'title' : 'Excluir Produto ?',
+				'keyboard' : false,
+				'overlay_close' : false,
+				'show_close_button' : false,
+				'buttons' : [ {
+					caption : 'Sim',
+					callback : function() {
+						$.ajax({
+							type : 'POST',
+							url : 'vendas',
+							data : {
+								id : $("#excluir").val(),
+								acao : "teste"
+							}
+						});
+					}
+				}, {
+					caption : 'NÃ£o',
+					callback : function() {
+					}
+				} ]
+			});
+		});
 	</script>
 	<c:import url="cabecalho.jsp" />
 	<div class="container">
@@ -61,8 +61,15 @@
 			role="form">
 			<input id="pId" type="hidden" name="id"> <input id="pAcao"
 				type="hidden" name="acao">
+
 			<div class="row">
-				<div class="form-group col-xs-3">
+				<div class="form-group col-xs-2">
+					<label for="qtde">Quantidade : </label> 
+					<input class="form-control" id="qtde" name="qtde" maxlength="3"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-xs-2">
 					<label for="codigo">Código : </label> <input class="form-control"
 						type=text maxlength="10" id="codigo" name="codigo" />
 				</div>
@@ -75,11 +82,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="form-group col-xs-3">
-					<label for="qtde">Quantidade : </label> <input class="form-control"
-						id="qtde" name="qtde" />
-				</div>
-				<div class="form-group col-xs-3">
+				<div class="form-group col-xs-2">
 					<label for="valorvenda">Valor da Venda : </label> <input
 						class="form-control"
 						onKeyPress="return(MascaraMoeda(this,'','.',event))"
@@ -89,7 +92,7 @@
 			<div class="row">
 				<div class="col-xs-12">
 					<button name="action" class="btn btn-primary" value="Incluir">Incluir</button>
-					<a href="produtos" class="btn btn-default">Cancelar</a>
+					<a href="vendas" class="btn btn-default">Cancelar</a>
 				</div>
 			</div>
 		</form>
@@ -102,11 +105,11 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th align=center>Código</th>
-							<th align=center>Descrição</th>
+							<th align=center>CÃ³digo</th>
+							<th align=center>DescriÃ§Ã£o</th>
 							<th align=center>Valor Venda</th>
 							<th align=center>Qtde</th>
-							<th width="13%">Ação</th>
+							<th width="13%">AÃ§Ã£o</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -129,14 +132,17 @@
 	</c:if>
 	<c:if test="${not empty acao}">
 		<script type="text/javascript">
-		$(document).ready(function() { 
-			$(function() {
-			    setTimeout(function() {
-			         $.bootstrapGrowl("${mensagem}", { type:'${acao}' ,align:'center'});
-			      }, 40);	
+			$(document).ready(function() {
+				$(function() {
+					setTimeout(function() {
+						$.bootstrapGrowl("${mensagem}", {
+							type : '${acao}',
+							align : 'center'
+						});
+					}, 40);
+				});
 			});
-		});
-	</script>
+		</script>
 	</c:if>
 </body>
 </html>

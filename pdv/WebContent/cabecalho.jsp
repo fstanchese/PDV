@@ -13,7 +13,7 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#">Vendas</a></li>
+				<li><a href="vendas">Vendas</a></li>
 				<li><a href="produtos">Produtos</a></li>
 				<li><a href="clientes">Clientes&nbsp;&nbsp;</a></li>
 			</ul>
