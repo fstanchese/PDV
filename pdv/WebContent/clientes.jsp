@@ -70,7 +70,7 @@
 									type: 'POST',
 									url: 'clientes',
 									data:{id: $("#excluir").val(), acao:"teste"}
-									}  
+									}.done(function () {})  
 								);
 			 	      	  }},
 		 	     	  { caption:'Não',callback:function() {}}
