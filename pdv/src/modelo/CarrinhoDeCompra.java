@@ -53,6 +53,17 @@ public class CarrinhoDeCompra {
 	public void setTotal(double total) {
 		this.total = total;
 	}
-	
+	public int getSize(){
+		if (itens == null) {
+			return 0;
+		} else {
+			return itens.size();
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "CarrinhoDeCompra [id=" + id + ", itens=" + itens + ", total=" + total + "]";
+	}	
 	
 }

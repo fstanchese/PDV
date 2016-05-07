@@ -25,7 +25,9 @@ public class CarrinhoController extends HttpServlet {
 
 		String pQtde = request.getParameter("qtde");
 		String pId = request.getParameter("id");
-		Long idPropduto = 0L;
+		String pAcao = request.getParameter("acao");
+		
+		Long idPropduto = 84L;
 		if (pId != null) {
 			if (!pId.equals("")) {
 				idPropduto = Long.parseLong(pId);
@@ -37,42 +39,55 @@ public class CarrinhoController extends HttpServlet {
 				qtde = Integer.parseInt(pQtde);
 			}
 		}
+		
 		boolean existe = false;
+		
 		HttpSession sessao = request.getSession();
-
 		CarrinhoDeCompra carrinho = (CarrinhoDeCompra) sessao.getAttribute("carrinho");
+		ProdutoDTO produto = new ProdutoDAO().carregar(idPropduto);
 
 		// verifica se já exista um carrinho na sessao
 		if (carrinho == null) {
 			// cria um carrinho
 			carrinho = new CarrinhoDeCompra();
 			sessao.setAttribute("carrinho", carrinho);
+			request.setAttribute("carrinho", carrinho);
 		}
 
-		// verifica se o produto existe no carrinho
-		if (carrinho.getItens() != null) {
-			for (ItemDeCompra item : carrinho.getItens()) {
-				if (item.getProduto().getId() == idPropduto) {
-					// incrementa a quantidade
-					item.setQuantidade(item.getQuantidade() + qtde);
-					existe = true;
+		if ("Incluir".equals(pAcao)) {
+	
+			// verifica se o produto existe no carrinho
+			if (carrinho.getItens() != null) {
+				for (ItemDeCompra item : carrinho.getItens()) {
+					if (item.getProduto().getId() == idPropduto) {
+						// incrementa a quantidade
+						item.setQuantidade(item.getQuantidade() + qtde);
+						existe = true;
+					}
 				}
 			}
+	
+			// se não existe o item ou produto, cria um novo
+			if (existe == false) {
+				
+				// cria um novo item
+				ItemDeCompra novoItem = new ItemDeCompra();
+				novoItem.setProduto(produto);
+				novoItem.setQuantidade(qtde);
+				// adiciona novo item
+				carrinho.addNovoItem(novoItem);
+			}
+			System.out.println(carrinho.getItens().toString());
+			request.setAttribute("carrinho", carrinho);
 		}
-
-		// se não existe o item ou produto, cria um novo
-		if (existe == false) {
-			// encontra o produto no banco
-			ProdutoDTO produto = new ProdutoDAO().carregar(idPropduto);
-			// cria um novo item
-			ItemDeCompra novoItem = new ItemDeCompra();
-			novoItem.setProduto(produto);
-			novoItem.setQuantidade(qtde);
-			// adiciona novo item
-			carrinho.addNovoItem(novoItem);
+		if ("Excluir".equals(pAcao)) {
+			ItemDeCompra itemRemove = new ItemDeCompra();
+			itemRemove.setProduto(produto);
+			carrinho.removerItem(itemRemove);
+			request.setAttribute("carrinho", carrinho);
 		}
 		
-		request.setAttribute("carrinho", carrinho.getItens());
+		sessao.setAttribute("carrinho", carrinho);
 		RequestDispatcher rd = request.getRequestDispatcher("/vendas.jsp");
 		rd.forward(request, response);
 	}

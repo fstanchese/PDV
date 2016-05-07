@@ -66,5 +66,12 @@ public class ProdutoDTO {
 	public Integer getQtde() {
 		return qtde;
 	}
+
+	@Override
+	public String toString() {
+		return "ProdutoDTO [id=" + id + ", codigo=" + codigo + ", descricao=" + descricao + ", valorvenda=" + valorvenda
+				+ ", qtde=" + qtde + "]";
+	}
+	
 }
 

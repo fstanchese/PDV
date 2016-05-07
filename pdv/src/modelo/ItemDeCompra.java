@@ -33,7 +33,10 @@ public class ItemDeCompra {
 	public void setTotal(double total) {
 		this.total = total;
 	}
-	
-	
+	@Override
+	public String toString() {
+		return "ItemDeCompra [id=" + id + ", produto=" + produto + ", quantidade=" + quantidade + ", total=" + total
+				+ "]";
+	}
 			
 }

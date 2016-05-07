@@ -2,21 +2,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html>
 <head>
-<link href="resources/css/bootstrap.min.css" rel="stylesheet"
-	type="text/css" />
-<link href="resources/css/bootstrap-theme.min.css" rel="stylesheet"
-	type="text/css" />
-<link href="resources/css/zebra.dialog.css" rel="stylesheet"
-	type="text/css" />
+<link href="resources/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="resources/css/bootstrap-theme.min.css" rel="stylesheet"	type="text/css" />
+<link href="resources/css/zebra.dialog.css" rel="stylesheet" type="text/css" />
 <link href="resources/css/custom.css" rel="stylesheet" type="text/css" />
 <link href="resources/css/style.css" rel="stylesheet" type="text/css" />
 <script src="resources/js/jquery.min.js" type="text/javascript"></script>
 <script src="resources/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="resources/js/jquery.maskedinput-1.3.1.min.js"
-	type="text/javascript"></script>
+<script src="resources/js/jquery.maskedinput-1.3.1.min.js" type="text/javascript"></script>
 <script src="resources/js/jquery.validate.js" type="text/javascript"></script>
-<script src="resources/js/jquery.bootstrap-growl.js"
-	type="text/javascript"></script>
+<script src="resources/js/jquery.bootstrap-growl.js" type="text/javascript"></script>
 <script src="resources/js/zebra.dialog.js" type="text/javascript"></script>
 <script src="resources/js/zebra.dialog.src.js" type="text/javascript"></script>
 <meta charset="UTF-8">
@@ -197,10 +192,10 @@
 										<td>&nbsp;${produto.descricao}</td>
 										<td>&nbsp;${produto.valorvenda}</td>
 										<td>&nbsp;${produto.qtde}</td>
-										<td width="13%"><a class="btn btn-success btn-xs"
-											onclick="javascript:document.f1.acao.value='Carregar';document.f1.id.value=${produto.id};document.f1.submit();">Alterar</a>
-											<button type="button" class="btn btn-danger btn-xs"
-												id="excluir" value="${produto.id}">Excluir</button></td>
+										<td width="13%">
+											<a class="btn btn-success btn-xs" onclick="javascript:document.f1.acao.value='Carregar';document.f1.id.value=${produto.id};document.f1.submit();">Alterar</a>
+											<button type="button" class="btn btn-danger btn-xs" id="excluir" value="${produto.id}">Excluir</button>
+										</td>
 									</tr>
 								</c:forEach>
 							</tbody>
