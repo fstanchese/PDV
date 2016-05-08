@@ -48,7 +48,7 @@ public class CarrinhoDeCompra {
 		this.itens = itens;
 	}
 	public double getTotal() {
-		return total;
+		return valorTotal();
 	}
 	public void setTotal(double total) {
 		this.total = total;

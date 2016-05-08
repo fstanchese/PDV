@@ -69,9 +69,15 @@ tbody tr.odd td {
 					role="form">
 					<input id="pId" type="hidden" name="id">
 					<div class="row">
+						<div class="form-group col-xs-9">
+							<label for="cpf">CPF : </label> 
+							<input type=text class="form-control" maxlength="11" size="11" name="cpf"/>
+						</div>
+					</div>					
+					<div class="row">
 						<div class="form-group col-xs-8">
 							<label for="codigo">Código : </label> <input class="form-control"
-								type=text maxlength="10" id="codigo" name="codigo" />
+								type=text maxlength="10" id="codigo" name="codigo" autofocus/>
 						</div>
 					</div>
 					<div class="row">
@@ -105,19 +111,28 @@ tbody tr.odd td {
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="itemCarrinho" items="${carrinho.itens}">
+						<fmt:setLocale value="pt_BR"/>
+						<c:forEach var="itemCarrinho" items="${carrinho.itens}">
 								<tr id="linha${itemCarrinho.produto.id}">
 									<td>&nbsp;${itemCarrinho.produto.codigo}</td>
 									<td>&nbsp;${itemCarrinho.produto.descricao}</td>
-									<td>&nbsp;${itemCarrinho.produto.valorvenda}</td>
+									<td>&nbsp;
+										<fmt:formatNumber value="${itemCarrinho.produto.valorvenda}" type="currency"/>
+									</td>
 									<td>&nbsp;${itemCarrinho.quantidade}</td>
-									<td>&nbsp;${itemCarrinho.total}</td>
-									<td width="13%"><a
-										href="vendas?acao=Excluir&id=${itemCarrinho.produto.id}"
-										class="btn btn-danger btn-xs" id="excluir">Excluir</a></td>
+									<td>&nbsp;
+										<fmt:formatNumber value="${itemCarrinho.total}" type="currency"/>
+									</td>
+									<td width="13%"><a href="vendas?acao=Excluir&id=${itemCarrinho.produto.id}" class="btn btn-danger btn-xs" id="excluir">Excluir</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
+					</table>
+					<table class="scrollTable">
+									<tr>
+									<td width="77%" align="right">&nbsp;Total da Venda:</td>
+									<td width="23%">&nbsp;<fmt:formatNumber value="${carrinho.total}" type="currency"/></td>
+									</tr>
 					</table>
 		</div>
 		</c:if>
