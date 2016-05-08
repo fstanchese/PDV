@@ -23,28 +23,26 @@ public class CarrinhoController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String pQtde = request.getParameter("qtde");
 		String pId = request.getParameter("id");
+		String pQtde = request.getParameter("qtde");
 		String pAcao = request.getParameter("acao");
+		String pCodigo = request.getParameter("codigo");
+
+		HttpSession sessao = request.getSession();
+		CarrinhoDeCompra carrinho = (CarrinhoDeCompra) sessao.getAttribute("carrinho");
 		
-		Long idPropduto = 84L;
+		long idProduto = 0;
 		if (pId != null) {
 			if (!pId.equals("")) {
-				idPropduto = Long.parseLong(pId);
+				idProduto = Integer.parseInt(pId);
 			}
 		}
-		Integer qtde = 0;
+		Integer qtde = 1;
 		if (pQtde != null) {
 			if (!pQtde.equals("")) {
 				qtde = Integer.parseInt(pQtde);
 			}
 		}
-		
-		boolean existe = false;
-		
-		HttpSession sessao = request.getSession();
-		CarrinhoDeCompra carrinho = (CarrinhoDeCompra) sessao.getAttribute("carrinho");
-		ProdutoDTO produto = new ProdutoDAO().carregar(idPropduto);
 
 		// verifica se já exista um carrinho na sessao
 		if (carrinho == null) {
@@ -54,22 +52,30 @@ public class CarrinhoController extends HttpServlet {
 			request.setAttribute("carrinho", carrinho);
 		}
 
-		if ("Incluir".equals(pAcao)) {
-	
+		if (pCodigo != null && !pCodigo.isEmpty()) {
+			idProduto = new ProdutoDAO().carregar(pCodigo);
+		}
+		
+		boolean existe = false;
+
+		ProdutoDTO produto = new ProdutoDAO().carregar(idProduto);
+
+		if ("Incluir".equals(pAcao) && idProduto > 0) {
+
 			// verifica se o produto existe no carrinho
 			if (carrinho.getItens() != null) {
 				for (ItemDeCompra item : carrinho.getItens()) {
-					if (item.getProduto().getId() == idPropduto) {
+					if (item.getProduto().getId() == idProduto) {
 						// incrementa a quantidade
 						item.setQuantidade(item.getQuantidade() + qtde);
 						existe = true;
 					}
 				}
 			}
-	
+
 			// se não existe o item ou produto, cria um novo
 			if (existe == false) {
-				
+
 				// cria um novo item
 				ItemDeCompra novoItem = new ItemDeCompra();
 				novoItem.setProduto(produto);
@@ -77,16 +83,16 @@ public class CarrinhoController extends HttpServlet {
 				// adiciona novo item
 				carrinho.addNovoItem(novoItem);
 			}
-			System.out.println(carrinho.getItens().toString());
-			request.setAttribute("carrinho", carrinho);
 		}
+		
 		if ("Excluir".equals(pAcao)) {
+			System.out.println("Produto "+produto.toString());
 			ItemDeCompra itemRemove = new ItemDeCompra();
 			itemRemove.setProduto(produto);
 			carrinho.removerItem(itemRemove);
-			request.setAttribute("carrinho", carrinho);
 		}
 		
+		request.setAttribute("carrinho", carrinho);
 		sessao.setAttribute("carrinho", carrinho);
 		RequestDispatcher rd = request.getRequestDispatcher("/vendas.jsp");
 		rd.forward(request, response);

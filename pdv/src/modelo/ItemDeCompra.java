@@ -28,7 +28,7 @@ public class ItemDeCompra {
 	}
 	public double getTotal() {
 		this.total = this.quantidade * this.produto.getValorvenda();
-		return total;
+		return this.total;
 	}
 	public void setTotal(double total) {
 		this.total = total;

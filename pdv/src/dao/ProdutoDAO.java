@@ -80,4 +80,23 @@ public class ProdutoDAO {
 		}
 		return dto;
 	}
+	
+	public long carregar(String codigo) {
+		String sqlSelect = "SELECT id FROM produto WHERE codigo = ?";
+		long id = 0;
+		try (Connection conn = ConnectionFactory.obtemConexao();
+				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
+			stm.setString(1, codigo);
+			try (ResultSet rs = stm.executeQuery();) {
+				if (rs.next()) {
+					id = rs.getLong("id");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e1) {
+			System.out.print(e1.getStackTrace());
+		}
+		return id;
+	}
 }
