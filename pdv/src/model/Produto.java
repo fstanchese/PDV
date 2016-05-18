@@ -1,4 +1,4 @@
-package modelo;
+package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.ProdutoDAO;
-import dto.ProdutoDTO;
-import util.ConnectionFactory;
+import factory.ConnectionFactory;
+import service.ProdutoService;
 
 public class Produto {
 	private Long id;
@@ -79,7 +79,7 @@ public class Produto {
 	
 	public boolean criar() {
 		ProdutoDAO dao = new ProdutoDAO();
-		ProdutoDTO dto = new ProdutoDTO();
+		ProdutoService dto = new ProdutoService();
 		dto.setCodigo(codigo);
 		dto.setDescricao(descricao);
 		dto.setValorvenda(valorvenda);
@@ -92,7 +92,7 @@ public class Produto {
 	
 	public boolean alterar() {
 		ProdutoDAO dao = new ProdutoDAO();
-		ProdutoDTO dto = new ProdutoDTO();
+		ProdutoService dto = new ProdutoService();
 		dto.setId(id);
 		dto.setCodigo(codigo);
 		dto.setDescricao(descricao);
@@ -104,13 +104,13 @@ public class Produto {
 	
 	public boolean excluir() {
 		ProdutoDAO dao = new ProdutoDAO();
-		ProdutoDTO dto = new ProdutoDTO();
+		ProdutoService dto = new ProdutoService();
 		dto.setId(id);
 		return dao.excluir(dto);		
 	}
 	
-	public List<ProdutoDTO> listar(String busca) {
-		List<ProdutoDTO> produtos = new ArrayList<>();
+	public List<ProdutoService> listar(String busca) {
+		List<ProdutoService> produtos = new ArrayList<>();
 		String sqlSelect = null;
         if (busca.isEmpty()) {
         	sqlSelect = "SELECT * FROM produto order by descricao";
@@ -130,7 +130,7 @@ public class Produto {
 					String pDescricao = rs.getString("descricao");
 					Double pValorVenda = rs.getDouble("valorvenda");
 					Integer pQtde = rs.getInt("qtde");
-					ProdutoDTO produto = new ProdutoDTO(pId, pCodigo, pDescricao, pValorVenda, pQtde);
+					ProdutoService produto = new ProdutoService(pId, pCodigo, pDescricao, pValorVenda, pQtde);
 					produtos.add(produto);
 				}
 			} catch (SQLException e) {
@@ -142,8 +142,8 @@ public class Produto {
 		return produtos;		
 	}
 
-	public List<ProdutoDTO> listarUltimoProdutoAcessado() {
-		List<ProdutoDTO> produtos = new ArrayList<>();
+	public List<ProdutoService> listarUltimoProdutoAcessado() {
+		List<ProdutoService> produtos = new ArrayList<>();
 		String sqlSelect = "SELECT id, codigo, descricao, valorvenda, qtde FROM produto where id=?";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
@@ -155,7 +155,7 @@ public class Produto {
 					String pDescricao = rs.getString("descricao");
 					Double pValorVenda = rs.getDouble("valorvenda");
 					Integer pQtde = rs.getInt("qtde");
-					ProdutoDTO produto = new ProdutoDTO(pId, pCodigo, pDescricao, pValorVenda, pQtde);
+					ProdutoService produto = new ProdutoService(pId, pCodigo, pDescricao, pValorVenda, pQtde);
 					produtos.add(produto);
 				}
 			} catch (SQLException e) {

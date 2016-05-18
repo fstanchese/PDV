@@ -1,10 +1,10 @@
-package modelo;
+package model;
 
-import dto.ProdutoDTO;
+import service.ProdutoService;
 
 public class ItemDeCompra {
 	private Long id;
-	private ProdutoDTO produto;
+	private ProdutoService produto;
 	private int quantidade;
 	private double total;
 	
@@ -14,10 +14,10 @@ public class ItemDeCompra {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public ProdutoDTO getProduto() {
+	public ProdutoService getProduto() {
 		return produto;
 	}
-	public void setProduto(ProdutoDTO produto) {
+	public void setProduto(ProdutoService produto) {
 		this.produto = produto;
 	}
 	public int getQuantidade() {

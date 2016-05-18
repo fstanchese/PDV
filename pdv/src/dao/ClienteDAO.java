@@ -5,12 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import dto.ClienteDTO;
-import util.ConnectionFactory;
+import factory.ConnectionFactory;
+import service.ClienteService;
 
 public class ClienteDAO {
 
-	public boolean incluir(ClienteDTO dto) {
+	public boolean incluir(ClienteService dto) {
 		String sql = "INSERT INTO cliente( nome, fone, cpf, email ) VALUES (?, ?, ?, ?)";
 
 		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);) {
@@ -30,7 +30,7 @@ public class ClienteDAO {
 		}
 	}
 
-	public boolean alterar(ClienteDTO dto) {
+	public boolean alterar(ClienteService dto) {
 		String sql = "UPDATE cliente SET nome=? , fone=?, cpf=?, email=? WHERE id=?";
 
 		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sql);) {
@@ -47,7 +47,7 @@ public class ClienteDAO {
 		}
 	}
 
-	public boolean excluir(ClienteDTO dto) {
+	public boolean excluir(ClienteService dto) {
 		String sql = "DELETE FROM cliente WHERE id=?";
 
 		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sql);) {
@@ -60,8 +60,8 @@ public class ClienteDAO {
 		}
 	}
 
-	public ClienteDTO carregar(Long id) {
-		ClienteDTO dto = new ClienteDTO();
+	public ClienteService carregar(Long id) {
+		ClienteService dto = new ClienteService();
 		String sqlSelect = "SELECT nome, fone, cpf, email FROM cliente WHERE cliente.id = ?";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 			PreparedStatement stm = conn.prepareStatement(sqlSelect);) {

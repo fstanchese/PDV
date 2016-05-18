@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.ProdutoDAO;
-import dto.ProdutoDTO;
-import modelo.Produto;
+import model.Produto;
+import service.ProdutoService;
 
 @WebServlet("/produtos")
 public class ProdutoController extends HttpServlet {
@@ -79,15 +79,15 @@ public class ProdutoController extends HttpServlet {
 			}
 		} else if ("Carregar".equals(pAcao)) {
 			ProdutoDAO dao = new ProdutoDAO();
-			ProdutoDTO dto = dao.carregar(id);
+			ProdutoService dto = dao.carregar(id);
 			dto.setAcao(pAcao);
 			request.setAttribute("produto", dto);
 		}
 		if ("Pesquisar".equals(pAction)) {
-			List<ProdutoDTO> produtos = produto.listar(pBusca);
+			List<ProdutoService> produtos = produto.listar(pBusca);
 			request.setAttribute("produtos", produtos);
 		} else if ("success".equals(acao)) {
-			List<ProdutoDTO> produtos = produto.listarUltimoProdutoAcessado();
+			List<ProdutoService> produtos = produto.listarUltimoProdutoAcessado();
 			request.setAttribute("produtos", produtos);
 		}
 		request.setAttribute("acao", acao);

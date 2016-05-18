@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.ClienteDAO;
-import dto.ClienteDTO;
-import modelo.Cliente;
+import model.Cliente;
+import service.ClienteService;
 
 @WebServlet("/clientes")
 public class ClienteController extends HttpServlet {
@@ -65,15 +65,15 @@ public class ClienteController extends HttpServlet {
 			}
 		} else if ("Carregar".equals(pAcao)) {
 			ClienteDAO dao = new ClienteDAO();
-			ClienteDTO dto = dao.carregar(id);
+			ClienteService dto = dao.carregar(id);
 			dto.setAcao(pAcao);
 			request.setAttribute("cliente", dto);
 		}
 		if ("Pesquisar".equals(pAction)) {
-			List<ClienteDTO> clientes = cliente.listar(pBusca);
+			List<ClienteService> clientes = cliente.listar(pBusca);
 			request.setAttribute("clientes", clientes);
 		} else if ("success".equals(acao)){
-			List<ClienteDTO> clientes = cliente.listarUltimoClienteAcessado();
+			List<ClienteService> clientes = cliente.listarUltimoClienteAcessado();
 			request.setAttribute("clientes", clientes);		
 		}
 		request.setAttribute("acao", acao);

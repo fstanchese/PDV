@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import modelo.Venda;
-import util.ConnectionFactory;
+import factory.ConnectionFactory;
+import model.Venda;
 
 public class VendaDAO {
 

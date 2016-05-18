@@ -5,12 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import dto.ProdutoDTO;
-import util.ConnectionFactory;
+import factory.ConnectionFactory;
+import service.ProdutoService;
 
 public class ProdutoDAO {
 
-	public boolean incluir(ProdutoDTO dto) {
+	public boolean incluir(ProdutoService dto) {
 		String sql = "insert into produto (codigo,descricao,valorvenda,qtde) values (?,?,?,?)";
 		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS)) {
 			stm.setString(1, dto.getCodigo());
@@ -29,7 +29,7 @@ public class ProdutoDAO {
 		}
 	}
 
-	public boolean alterar(ProdutoDTO dto) {
+	public boolean alterar(ProdutoService dto) {
 		String sql = "update produto set codigo=?,descricao=?,valorvenda=?,qtde=? where id=?";
 
 		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sql)) {
@@ -46,7 +46,7 @@ public class ProdutoDAO {
 		}
 	}
 
-	public boolean excluir(ProdutoDTO dto) {
+	public boolean excluir(ProdutoService dto) {
 		String sql = "delete from produto where id=?";
 		try (Connection conn = ConnectionFactory.obtemConexao(); PreparedStatement stm = conn.prepareStatement(sql)) {
 			stm.setLong(1, dto.getId());
@@ -58,8 +58,8 @@ public class ProdutoDAO {
 		}
 	}
 
-	public ProdutoDTO carregar(Long id) {
-		ProdutoDTO dto = new ProdutoDTO();
+	public ProdutoService carregar(Long id) {
+		ProdutoService dto = new ProdutoService();
 		String sqlSelect = "SELECT codigo, descricao, valorvenda, qtde FROM produto WHERE id = ?";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {

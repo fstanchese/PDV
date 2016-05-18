@@ -1,4 +1,4 @@
-package modelo;
+package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.ClienteDAO;
-import dto.ClienteDTO;
-import util.ConnectionFactory;
+import factory.ConnectionFactory;
+import service.ClienteService;
 
 public class Cliente {
 	private Long id;
@@ -77,7 +77,7 @@ public class Cliente {
 
 	public boolean criar() {
 		ClienteDAO dao = new ClienteDAO();
-		ClienteDTO dto = new ClienteDTO();
+		ClienteService dto = new ClienteService();
 		dto.setNome(nome);
 		dto.setFone(fone);
 		dto.setCpf(cpf);
@@ -89,7 +89,7 @@ public class Cliente {
 
 	public boolean alterar() {
 		ClienteDAO dao = new ClienteDAO();
-		ClienteDTO dto = new ClienteDTO();
+		ClienteService dto = new ClienteService();
 		dto.setId(id);
 		dto.setNome(nome);
 		dto.setFone(fone);
@@ -100,13 +100,13 @@ public class Cliente {
 
 	public boolean excluir() {
 		ClienteDAO dao = new ClienteDAO();
-		ClienteDTO dto = new ClienteDTO();
+		ClienteService dto = new ClienteService();
 		dto.setId(id);
 		return dao.excluir(dto);
 	}
 
-	public List<ClienteDTO> listar(String busca) {
-		List<ClienteDTO> clientes = new ArrayList<>();
+	public List<ClienteService> listar(String busca) {
+		List<ClienteService> clientes = new ArrayList<>();
 		String sqlSelect = null;
         if (busca.isEmpty()) {
         	sqlSelect = "SELECT id, nome, fone, cpf,email FROM cliente order by nome";
@@ -126,7 +126,7 @@ public class Cliente {
 					String fone = rs.getString("fone");
 					String cpf = rs.getString("cpf");
 					String email = rs.getString("email");
-					ClienteDTO cliente = new ClienteDTO(id, nome, fone, cpf, email );
+					ClienteService cliente = new ClienteService(id, nome, fone, cpf, email );
 					clientes.add(cliente);
 				}
 			} catch (SQLException e) {
@@ -138,8 +138,8 @@ public class Cliente {
 		return clientes;
 	}
 
-	public List<ClienteDTO> listarUltimoClienteAcessado() {
-		List<ClienteDTO> clientes = new ArrayList<>();
+	public List<ClienteService> listarUltimoClienteAcessado() {
+		List<ClienteService> clientes = new ArrayList<>();
 		String sqlSelect = "SELECT id, nome, fone, cpf,email FROM cliente where id=?";		
 		try (Connection conn = ConnectionFactory.obtemConexao();
 			PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
@@ -150,7 +150,7 @@ public class Cliente {
 					String fone = rs.getString("fone");
 					String cpf = rs.getString("cpf");
 					String email = rs.getString("email");
-					ClienteDTO cliente = new ClienteDTO(id, nome, fone, cpf, email );
+					ClienteService cliente = new ClienteService(id, nome, fone, cpf, email );
 					clientes.add(cliente);
 				}
 			} catch (SQLException e) {

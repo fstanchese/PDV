@@ -1,6 +1,6 @@
-package dto;
+package service;
 
-public class ProdutoDTO {
+public class ProdutoService {
 	private Long id;
 	private String codigo;
 	private String descricao;
@@ -8,10 +8,10 @@ public class ProdutoDTO {
 	private Integer qtde;
 	transient String acao;
 	
-	public ProdutoDTO() {
+	public ProdutoService() {
 	}
 
-	public ProdutoDTO(Long id, String codigo, String descricao, Double valorvenda, Integer qtde) {
+	public ProdutoService(Long id, String codigo, String descricao, Double valorvenda, Integer qtde) {
 		this.id = id;
 		this.codigo = codigo;
 		this.descricao = descricao;

@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.ProdutoDAO;
-import dto.ProdutoDTO;
-import modelo.CarrinhoDeCompra;
-import modelo.ItemDeCompra;
+import model.CarrinhoDeCompra;
+import model.ItemDeCompra;
+import service.ProdutoService;
 
 @WebServlet("/vendas")
 public class CarrinhoController extends HttpServlet {
@@ -58,7 +58,7 @@ public class CarrinhoController extends HttpServlet {
 		
 		boolean existe = false;
 
-		ProdutoDTO produto = new ProdutoDAO().carregar(idProduto);
+		ProdutoService produto = new ProdutoDAO().carregar(idProduto);
 
 		if ("Incluir".equals(pAcao) && idProduto > 0) {
 

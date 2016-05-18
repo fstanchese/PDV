@@ -1,16 +1,16 @@
-package dto;
+package service;
 
-public class ClienteDTO {
+public class ClienteService {
 	private Long id;
 	private String nome;
 	private String fone;
 	private String cpf;
 	private String email;
 	
-	public ClienteDTO() {
+	public ClienteService() {
 	}
 	
-	public ClienteDTO(Long id, String nome, String fone, String cpf, String email) {
+	public ClienteService(Long id, String nome, String fone, String cpf, String email) {
 		this.id = id;
 		this.nome = nome;
 		this.fone = fone;
