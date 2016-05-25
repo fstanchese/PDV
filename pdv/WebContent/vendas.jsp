@@ -172,7 +172,82 @@ function cpf_mask(v){
 	v=v.replace(/(\d{3})(\d)/,"$1-$2")   //Coloca ponto entre o decimoprimeiro e o decimosegundo dígitos
 	return v
 }
+function MascaraMoeda(objTextBox, SeparadorMilesimo, SeparadorDecimal,
+		e) {
+	var sep = 0;
+	var key = '';
+	var i = j = 0;
+	var len = len2 = 0;
+	var strCheck = '0123456789';
+	var aux = aux2 = '';
+	var whichCode = (window.Event) ? e.which : e.keyCode;
+	if (whichCode == 13 || whichCode == 8)
+		return true;
+	key = String.fromCharCode(whichCode); // Valor para o cï¿½digo da Chave  
+	if (strCheck.indexOf(key) == -1)
+		return false; // Chave invï¿½lida  
+	len = objTextBox.value.length;
+	for (i = 0; i < len; i++)
+		if ((objTextBox.value.charAt(i) != '0')
+				&& (objTextBox.value.charAt(i) != SeparadorDecimal))
+			break;
+	aux = '';
+	for (; i < len; i++)
+		if (strCheck.indexOf(objTextBox.value.charAt(i)) != -1)
+			aux += objTextBox.value.charAt(i);
+	aux += key;
+	len = aux.length;
+	if (len == 0)
+		objTextBox.value = '';
+	if (len == 1)
+		objTextBox.value = '0' + SeparadorDecimal + '0' + aux;
+	if (len == 2)
+		objTextBox.value = '0' + SeparadorDecimal + aux;
+	if (len > 2) {
+		aux2 = '';
+		for (j = 0, i = len - 3; i >= 0; i--) {
+			if (j == 3) {
+				aux2 += SeparadorMilesimo;
+				j = 0;
+			}
+			aux2 += aux.charAt(i);
+			j++;
+		}
+		objTextBox.value = '';
+		len2 = aux2.length;
+		for (i = len2 - 1; i >= 0; i--)
+			objTextBox.value += aux2.charAt(i);
+		objTextBox.value += SeparadorDecimal + aux.substr(len - 2, len);
+	}
+	return false;
+}
 </script>
+                  <!-- Modal -->
+				  <div class="modal fade" id="idPagamento" role="dialog">
+				    <div class="modal-dialog">
+				    
+				      <!-- Modal content-->
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          <button type="button" class="close" data-dismiss="modal">&times;</button>
+				          <h4 style="color:blue;"><span class="glyphicon glyphicon-usd"></span> Pagamento</h4>
+				        </div>
+				        <div class="modal-body">
+				<table class="table table-striped">
+					<tr>
+					<td width="50%" align="right">&nbsp;Total da Venda:</td>
+					<td width="50%"><fmt:formatNumber value="${carrinho.total}" type="currency"/></td>
+					</tr>
+					<tr>
+					<td width="50%" align="right">&nbsp;Recebido:</td>
+					<td width="50%"> R$ <input size="10" onKeyPress="return(MascaraMoeda(this,'','.',event))" id="valorvenda" name="recebido" />			
+					</tr>				
+				</table>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+                  <!-- /.modal -->
 <c:import url="cabecalho.jsp" />
 <div class="container">
 	<div role="main" class="col-xs-2">
@@ -181,7 +256,7 @@ function cpf_mask(v){
 			<div class="row">
 				<div class="form-group col-xs-10">
 					<label for="cpf">CPF : </label> 
-					<input class="form-control" type="text" name="cpf" id="cpf" onblur="javascript:validarCPF(this.value);" onkeypress="javascript:mascara(this, cpf_mask);"  maxlength="14" />				
+					<input type="text" class="form-control"  name="cpf" id="cpf" onblur="javascript:validarCPF(this.value);" onkeypress="javascript:mascara(this, cpf_mask);"  maxlength="14" value="${cpf}" />				
 				</div>
 			</div>					
 			<div class="row">
@@ -199,7 +274,7 @@ function cpf_mask(v){
 			<div class="row">
 				<div class="col-xs-12">
 					<button name="acao" class="btn btn-primary" value="Incluir">Incluir</button>
-					<a href="vendas" class="btn btn-default">Cancelar</a>
+                    <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#idPagamento">Pagar</a>
 				</div>
 			</div>
 		</form>

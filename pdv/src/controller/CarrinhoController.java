@@ -27,6 +27,7 @@ public class CarrinhoController extends HttpServlet {
 		String pQtde = request.getParameter("qtde");
 		String pAcao = request.getParameter("acao");
 		String pCodigo = request.getParameter("codigo");
+		String pCPF = request.getParameter("cpf");
 
 		HttpSession sessao = request.getSession();
 		CarrinhoDeCompra carrinho = (CarrinhoDeCompra) sessao.getAttribute("carrinho");
@@ -92,7 +93,9 @@ public class CarrinhoController extends HttpServlet {
 		}
 		
 		request.setAttribute("carrinho", carrinho);
+		request.setAttribute("cpf", pCPF);
 		sessao.setAttribute("carrinho", carrinho);
+		sessao.setAttribute("cpf", pCPF);
 		RequestDispatcher rd = request.getRequestDispatcher("/vendas.jsp");
 		rd.forward(request, response);
 	}

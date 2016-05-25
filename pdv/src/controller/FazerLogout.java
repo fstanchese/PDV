@@ -18,6 +18,7 @@ public class FazerLogout extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.setAttribute("logado", null);
+		session.setAttribute("carrinho", null);
 		response.sendRedirect("index.jsp");
 	}
 
