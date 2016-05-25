@@ -36,13 +36,16 @@
 			});
 		});
 		$(document).on('click','#excluir',function () {
+			var cName = "input[name='ProdutoStr"+$("#excluir").val()+"']";
 			$.Zebra_Dialog( '', 
 				{
 			   		'type': 'question',
 	  		  		'title': 'Excluir Produto ?',
 					'keyboard' : false,
 					'overlay_close' : false,
-					'show_close_button' : false,
+					'show_close_button' : true,
+					'position': ['center', 'top + 200'],
+		 	  		'source': {'inline': $(cName).val()},	
 		 	  		'buttons': 
 					[
 		 	      	  { caption:'Sim',callback:function() 
@@ -195,6 +198,7 @@
 										<td width="13%">
 											<a class="btn btn-success btn-xs" onclick="javascript:document.f1.acao.value='Carregar';document.f1.id.value=${produto.id};document.f1.submit();">Alterar</a>
 											<button type="button" class="btn btn-danger btn-xs" id="excluir" value="${produto.id}">Excluir</button>
+											<input name="ProdutoStr${produto.id}" type="hidden"	value="${produto.descricao}">										
 										</td>
 									</tr>
 								</c:forEach>

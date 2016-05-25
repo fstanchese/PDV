@@ -86,7 +86,6 @@ public class CarrinhoController extends HttpServlet {
 		}
 		
 		if ("Excluir".equals(pAcao)) {
-			System.out.println("Produto "+produto.toString());
 			ItemDeCompra itemRemove = new ItemDeCompra();
 			itemRemove.setProduto(produto);
 			carrinho.removerItem(itemRemove);

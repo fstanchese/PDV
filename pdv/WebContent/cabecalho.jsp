@@ -16,6 +16,7 @@
 				<li><a href="vendas">Vendas</a></li>
 				<li><a href="produtos">Produtos</a></li>
 				<li><a href="clientes">Clientes&nbsp;&nbsp;</a></li>
+				<li><a href="logout">Logout&nbsp;&nbsp;</a></li>
 			</ul>
 		</div>
 	</div>

@@ -13,7 +13,7 @@ public class ConnectionFactory {
 		}
 	}
 
-	// Obt√©m conex√£o com o banco de dados
+	// ObtÈm conex„o com o banco de dados
 	public static Connection obtemConexao() throws SQLException {
 		return DriverManager.getConnection("jdbc:mysql://localhost/pdv?user=fstanchese&password=123456");
 	}
