@@ -50,19 +50,27 @@ tbody tr.odd td {
 </style>
 <body>
 <script type="text/javascript">
-$(function() {
+	$(function() {
 		$('.scrollTable').scrolltable({
 			stripe : true,
 			oddClass : 'odd',
 			maxHeight: 425
 		});
-});
+	});
 function validarCPF( cpf ){
 	var filtro = /^\d{3}.\d{3}.\d{3}-\d{2}$/i;
 	if(cpf=="") return true;
 	if(!filtro.test(cpf))
 	{
-		window.alert("CPF inválido. Tente novamente.");
+		$.Zebra_Dialog(iCpf, 
+		{
+			   		'type': 'information',
+	  		  		'title': 'CPF Invalido',
+					'keyboard' : false,
+					'overlay_close' : false,
+					'show_close_button' : false
+		}
+		);
 		document.getElementById('cpf').value = "";
 		return false;
 	}
@@ -233,16 +241,20 @@ function MascaraMoeda(objTextBox, SeparadorMilesimo, SeparadorDecimal,
 				          <h4 style="color:blue;"><span class="glyphicon glyphicon-usd"></span> Pagamento</h4>
 				        </div>
 				        <div class="modal-body">
-				<table class="table table-striped">
-					<tr>
-					<td width="50%" align="right">&nbsp;Total da Venda:</td>
-					<td width="50%"><fmt:formatNumber value="${carrinho.total}" type="currency"/></td>
-					</tr>
-					<tr>
-					<td width="50%" align="right">&nbsp;Recebido:</td>
-					<td width="50%"> R$ <input size="10" onKeyPress="return(MascaraMoeda(this,'','.',event))" id="valorvenda" name="recebido" />			
-					</tr>				
-				</table>
+						<table class="table table-striped">
+						<tr>
+						<td width="50%" align="right">&nbsp;Total da Venda :</td>
+						<td width="50%"><fmt:formatNumber value="${total}" type="currency"/></td>
+						</tr>
+						<tr>
+						<td width="50%" align="right">&nbsp;Recebido :</td>
+						<td width="50%"> R$ <input size="10" onKeyPress="return(MascaraMoeda(this,'','.',event))" id="recebido" name="recebido" />			
+						</tr>				
+						<tr>
+						<td width="50%" align="right">&nbsp;Troco :</td>
+						<td width="50%"> R$ <input disabled size="10" onKeyPress="return(MascaraMoeda(this,'','.',event))" id="troco" name="troco" />			
+						</tr>				
+						</table>
 				        </div>
 				      </div>
 				    </div>
@@ -315,7 +327,7 @@ function MascaraMoeda(objTextBox, SeparadorMilesimo, SeparadorDecimal,
 				<table class="scrollTable">
 					<tr>
 					<td width="77%" align="right">&nbsp;Total da Venda:</td>
-					<td width="23%">&nbsp;<fmt:formatNumber value="${carrinho.total}" type="currency"/></td>
+					<td width="23%">&nbsp;<fmt:formatNumber value="${total}" type="currency"/></td>
 					</tr>
 				</table>
 			</c:if>

@@ -9,7 +9,7 @@ public class CarrinhoDeCompra {
 	private Long id;
 	private List<ItemDeCompra> itens;
 	private double total;
-	
+
 	public void addNovoItem(ItemDeCompra item) {
 		if(this.itens==null){
 			this.itens = new ArrayList<ItemDeCompra>();

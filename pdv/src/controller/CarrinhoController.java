@@ -91,7 +91,10 @@ public class CarrinhoController extends HttpServlet {
 			itemRemove.setProduto(produto);
 			carrinho.removerItem(itemRemove);
 		}
-		
+		request.setAttribute("total", null);
+		if (carrinho.getSize() > 0) {
+			request.setAttribute("total", carrinho.getTotal());
+		}
 		request.setAttribute("carrinho", carrinho);
 		request.setAttribute("cpf", pCPF);
 		sessao.setAttribute("carrinho", carrinho);
